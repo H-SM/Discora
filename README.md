@@ -1,6 +1,7 @@
 # Discora
 Your ultimate chat sanctuary. Connect, chat, and share seamlessly in our vibrant and friendly community hub!
 
+
 ## Major steps for the project  
 - text feature
 - user auth 
