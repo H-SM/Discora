@@ -6,7 +6,7 @@ import DiscoverServers from './DiscoverServers'
 
 const ServerList = () => {
   return (
-      <div className='bg-black/20 text-black h-[100%] w-[4.5rem] absolute flex flex-col items-center pt-4 gap-2 justify-start overflow-x-auto'>
+      <div className='bg-black/20 text-black h-[100%] w-[4.5rem] flex flex-col items-center pt-4 gap-2 justify-start overflow-x-auto'>
         <UserMessage/> 
         <div className='bg-[#313338] w-[1.75rem] h-[0.1rem] rounded-sm'/>
         <Servers/>

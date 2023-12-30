@@ -1,10 +1,12 @@
 import React from 'react'
 import ServerList from '../components/ServerList'
+import UserChat from '../components/UserChat'
 
 const Home = () => {
   return (
-    <div>
+    <div className='w-[100%] h-[100vh] flex flex-row'>
       <ServerList/>
+      <UserChat/> 
     </div>
   )
 }
