@@ -2,7 +2,7 @@ import React from 'react'
 
 const UserTopNav = () => {
   return (
-    <div className='bg-[#313338] h-[3rem] flex flex-row justify-between'>
+    <div className='bg-[#313338] h-[3rem] flex flex-row justify-between  border-b-2 border-black/20'>
         <div className='h-[3rem] flex flex-row'>
         <div className='w-[15rem] bg-black/20 flex justify-center items-center'>
             <input className='w-[14rem] h-[1.8rem] px-1 py-[0.175rem] rounded-sm text-[0.875rem] outline-none bg-[#1e1f22] mx-2' placeholder='Find or start a conversation'/>
