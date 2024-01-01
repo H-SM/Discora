@@ -1,5 +1,5 @@
 import React from 'react'
-import UserMessage from '../components/UserMessage'
+import UserMessage from './UserMessage'
 import Servers from './Servers'
 import AddServer from './AddServer'
 import DiscoverServers from './DiscoverServers'
