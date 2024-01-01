@@ -5,9 +5,11 @@ import UserRightSec from './UserRightSec'
 
 const UserChatHere = () => {
   return (
-    <div className='w-full h-full flex flex-row'>
+    <div className='w-full h-full flex flex-row justify-between'>
+        <div className='h-full flex flex-row'>
         <UserSideNav/>
-        <UserFriendsMenu/> 
+        <UserFriendsMenu/>
+        </div> 
         <UserRightSec/>
     </div>
   )
