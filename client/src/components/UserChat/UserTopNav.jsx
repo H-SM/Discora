@@ -5,16 +5,22 @@ const UserTopNav = () => {
     <div className='bg-[#313338] h-[3rem] flex flex-row justify-between  border-b-2 border-black/20'>
         <div className='h-[3rem] flex flex-row'>
         <div className='w-[15rem] bg-black/20 flex justify-center items-center'>
-            <input className='w-[14rem] h-[1.8rem] px-1 py-[0.175rem] rounded-sm text-[0.875rem] outline-none bg-[#1e1f22] mx-2' placeholder='Find or start a conversation'/>
+            {true ?
+            <div className='w-[15rem] h-full px-3 flex justify-between items-center'>
+                <p className='font-medium text-white text-[0.9rem] pl-1'>hsm-s's server</p>
+                <svg viewBox="0 -4.5 20 20" className='w-3 h-3' version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_down [#338]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-220.000000, -6684.000000)" fill="currentColor"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M164.292308,6524.36583 L164.292308,6524.36583 C163.902564,6524.77071 163.902564,6525.42619 164.292308,6525.83004 L172.555873,6534.39267 C173.33636,6535.20244 174.602528,6535.20244 175.383014,6534.39267 L183.70754,6525.76791 C184.093286,6525.36716 184.098283,6524.71997 183.717533,6524.31405 C183.328789,6523.89985 182.68821,6523.89467 182.29347,6524.30266 L174.676479,6532.19636 C174.285736,6532.60124 173.653152,6532.60124 173.262409,6532.19636 L165.705379,6524.36583 C165.315635,6523.96094 164.683051,6523.96094 164.292308,6524.36583" id="arrow_down-[#338]"> </path> </g> </g> </g> </g></svg>
+            </div> 
+            : 
+            <input className='w-[14rem] h-[1.8rem] px-1 py-[0.175rem] rounded-sm text-[0.875rem] outline-none bg-[#1e1f22] mx-2' placeholder='Find or start a conversation'/>}
         </div>
-        {true ? 
+        {false ? 
         <div className='w-full h-full flex items-center justify-start ml-2'>
             <div className='w-[7rem] h-full flex gap-1 items-center text-white/50 justify-center'>
             <img src='https://i.redd.it/3fc3wd5xwf171.png' alt="user_name_here" className='rounded-full w-[1.9rem]'/>
             <p className='text-[0.9rem] leading-[1.3rem] text-white font-semibold ml-1'>Sidhant</p>
             </div>
         </div>
-        : 
+        : false ?  
         <div className='w-full h-full flex items-center justify-start'>
             <div className='w-[7rem] h-full flex gap-1 items-center text-white/50 justify-center'>
             <svg fill="currentColor" viewBox="-3 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" width={"2rem"} height={"2rem"}><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" ></g><g id="SVGRepo_iconCarrier"> <title>friend</title> <path d="M17.25 20.5c1.281 0.719 2 1.906 1.875 3.125-0.063 0.75-0.031 0.75-1 0.875-0.594 0.063-4.375 0.094-8.219 0.094-4.375 0-8.938-0.031-9.281-0.125-1.281-0.344-0.531-2.719 1.156-3.844 1.344-0.844 4.063-2.156 4.813-2.313 1.031-0.219 1.156-0.875 0-2.844-0.25-0.469-0.531-1.813-0.563-3.25-0.031-2.313 0.375-3.875 2.406-4.656 0.375-0.125 0.813-0.188 1.219-0.188 1.344 0 2.594 0.75 3.125 1.844 0.719 1.469 0.375 5.313-0.375 6.719-0.906 1.594-0.813 2.094 0.188 2.344 0.625 0.156 2.688 1.125 4.656 2.219zM24.094 18.531c1 0.531 1.563 1.5 1.469 2.438-0.031 0.563-0.031 0.594-0.781 0.688-0.375 0.063-2.344 0.094-4.656 0.094-0.406-0.969-1.188-1.844-2.25-2.406-1.219-0.688-2.656-1.406-3.75-1.875 0.719-0.344 1.344-0.625 1.625-0.688 0.781-0.188 0.875-0.625 0-2.188-0.219-0.375-0.469-1.438-0.5-2.563-0.031-1.813 0.375-3.063 1.938-3.656 0.313-0.094 0.656-0.156 0.969-0.156 1.031 0 2 0.563 2.406 1.438 0.531 1.156 0.281 4.156-0.281 5.281-0.688 1.25-0.625 1.625 0.156 1.813 0.5 0.125 2.094 0.906 3.656 1.781z"></path> </g></svg>
@@ -35,6 +41,13 @@ const UserTopNav = () => {
             </div>
             <div className='w-[7rem] h-full flex items-center justify-center'>
                 <button className='px-2 rounded-md bg-green-700 font-semibold'>Add Friend</button>
+            </div>
+        </div>
+        :
+        <div className='w-full h-full flex items-center justify-start ml-2'>
+            <div className='w-[7rem] h-full flex gap-1 items-center text-white justify-center'>
+            <div className='opacity-50'><svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 21L17 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 21L11 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M20 9L4 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4 15L20 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></div>
+            <p className='text-[0.9rem] leading-[1.3rem] text-white font-semibold ml-1'>general</p>
             </div>
         </div>
         }
