@@ -24,9 +24,13 @@ const UserRightSec = () => {
                 <p className='font-bold text-[1.1rem]'>Sid</p>
                 <p className='font-semibold text-[0.7rem]'>sid_the_sloth</p>
               </div>
-              <div className='w-[33vh] flex flex-col mt-2 mx-2 pb-2 justify-start items-start gap-1'>
+              <div className='w-[33vh] flex flex-col mt-2 mx-2 pb-2 justify-start items-start gap-1 border-white/20 border-b-[0.01rem]'>
                 <p className='font-extrabold text-[0.65rem]'>DISCORA MEMBER SINCE</p>
                 <p className='font-medium text-[0.7rem] font-roboto'>Jul 23,2020</p>
+              </div>
+              <div className='w-[33vh] flex flex-col mt-2 mx-2 pb-2 justify-start items-start h-[5rem] gap-1'>
+                <p className='font-extrabold text-[0.65rem]'>NOTE</p>
+                <textarea className='font-medium text-[0.7rem] font-sans bg-transparent outline-none resize-none  w-full h-fit mt-1 placeholder:opacity-90' placeholder='Click to add a note'/>
               </div>
             </div>
             <div className='w-[35vh] h-fit bg-[#111214] rounded-md flex flex-col justify-between items-start'>
