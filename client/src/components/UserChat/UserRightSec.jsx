@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from "../../assets/logo_discora_nobg_new.png"
 import clsx from 'clsx';
+import contextValue from "../../context/user/userContext";
 
+    
 const UserRightSec = () => {
-  const [userInfo, setUserinfo] = useState(2);
+    const context = useContext(contextValue);
+    const {userInfo} = context;
+
   return (
     <div className={clsx(`w-full h-full border-l-2 border-gray-600/20`,
     userInfo == 1 ? `bg-[#232428]`: userInfo == 0 ?`bg-[#303238]` : `bg-[#27292d]`

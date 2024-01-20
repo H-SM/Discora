@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import contextValue from "../../context/user/userContext";
 
+    
 const UserTopNav = () => {
-    let [userInfo, setUserinfo] = useState(2);
+    const context = useContext(contextValue);
+    const {userInfo, setUserinfo} = context;
   return (
     <div className='bg-[#313338] h-[3rem] flex flex-row justify-between  border-b-2 border-black/20'>
         <div className='h-[3rem] flex flex-row'>
