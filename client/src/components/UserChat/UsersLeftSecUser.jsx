@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import FriendListUser from './FriendListUser'
 import CombinedServerList from '../ServerLists/CombinedServerList'
 
 const UsersLeftSecUser = () => {
+  const [userInfo, setUserinfo] = useState(2);
+
   return (
     
     <div className='flex flex-col justify-start items-center gap-2 w-full overflow-y-auto overflow-x-hidden h-[86.2vh] pt-4'>
-      {true ?
+      {userInfo == 2 ?
       <>
         <div className='w-[14rem]  h-fit flex justify-center items-center pb-1  border-white/20 border-b-[0.01rem]'>
         <div className='w-full h-fit flex gap-3 items-center focus:text-white hover:text-white active:text-white text-gray-400/80 justify-start hover:bg-white/5 active:bg-white/10 focus:bg-white/10 px-[2rem] rounded-md hover:cursor-pointer py-1 mx-2'>

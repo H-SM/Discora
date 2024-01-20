@@ -3,12 +3,12 @@ import logo from "../../assets/logo_discora_nobg_new.png"
 import clsx from 'clsx';
 
 const UserRightSec = () => {
-  const [userInfo, setUserinfo] = useState(true);
+  const [userInfo, setUserinfo] = useState(2);
   return (
     <div className={clsx(`w-full h-full border-l-2 border-gray-600/20`,
-    userInfo ? `bg-[#232428]`: `bg-[#303238]`
+    userInfo == 1 ? `bg-[#232428]`: userInfo == 0 ?`bg-[#303238]` : `bg-[#27292d]`
     )} >
-      {userInfo ?
+      {userInfo == 1?
         <div>
           <div className='absolute w-[6rem] h-[6rem] mt-[3rem] ml-3 rounded-full bg-[#232428] z-10 flex justify-center items-center'>
           <img src={logo} alt="logo" className='relative w-[5.3rem] bg-white/5 rounded-full object-cover '/>
@@ -45,10 +45,12 @@ const UserRightSec = () => {
             </div>
           </div>
         </div>
-        :
+        : userInfo == 0 ?
         <div className='w-full h-full flex items-center justify-center '>
           <img src={logo} alt="logo" className='w-[24vh] opacity-10'/>
         </div>
+        :
+        <div></div>
       }
     </div>
   )
