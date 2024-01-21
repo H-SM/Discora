@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import logo from "../../assets/logo_discora_nobg_new.png"
 import clsx from 'clsx';
 import contextValue from "../../context/user/userContext";
+import RoleTitle from '../ServerLists/RoleTitle';
+import UserCard from '../ServerLists/UserCard';
 
     
 const UserRightSec = () => {
@@ -54,7 +56,38 @@ const UserRightSec = () => {
           <img src={logo} alt="logo" className='w-[24vh] opacity-10'/>
         </div>
         :
-        <div></div>
+        <div className='w-full h-[90vh] overflow-y-auto flex flex-col mt-2'>
+            <RoleTitle title="MOD" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            {/* TODO: make a color picker here in the future over the role the current user have & a infinite scroll loader over the user infos in the server  */}
+            <RoleTitle title="admin" color="black"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="black"/>
+            <RoleTitle title="booster" color="green"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="green"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="green"/>
+            <RoleTitle title="peps" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+        </div>
       }
     </div>
   )

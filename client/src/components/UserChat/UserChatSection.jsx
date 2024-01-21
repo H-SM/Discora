@@ -2,7 +2,9 @@ import React from 'react'
 
 const UserChatSection = () => {
   return (
-    <div className='bg-[#313338] h-full 2xl:w-[78rem] w-[53rem] flex flex-col justify-end items-center gap-2'>
+    <div className='bg-[#313338] h-full
+    2xl:w-[78rem] w-[53rem] 
+    flex flex-col justify-end items-center gap-2'>
       <div className='w-full h-full bg-gray-700/5 text-white'>
         {/* this is where the chat log will come in  */}
       </div>
