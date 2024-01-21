@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import contextValue from "../../context/user/userContext";
-
+import logo from "../../assets/logo_discora_nobg_new.png";
     
 const UserTopNav = () => {
     const context = useContext(contextValue);
-    const {userInfo, setUserinfo} = context;
+    const {userInfo, userChat} = context;
   return (
     <div className='bg-[#313338] h-[3rem] flex flex-row justify-between  border-b-2 border-black/20'>
         <div className='h-[3rem] flex flex-row'>
@@ -19,9 +19,9 @@ const UserTopNav = () => {
         </div>
         {userInfo == 1 ? 
         <div className='w-full h-full flex items-center justify-start ml-2'>
-            <div className='w-[7rem] h-full flex gap-1 items-center text-white/50 justify-center'>
-            <img src='https://i.redd.it/3fc3wd5xwf171.png' alt="user_name_here" className='rounded-full w-[1.9rem]'/>
-            <p className='text-[0.9rem] leading-[1.3rem] text-white font-semibold ml-1'>Sidhant</p>
+            <div className='w-[7rem] h-full flex gap-1 items-center text-white/50 justify-start ml-2'>
+            <img src= {`${userChat.img ? userChat.img : logo}`} alt="user_name_here" className='rounded-full w-[1.9rem]'/>
+            <p className='text-[0.9rem] leading-[1.3rem] text-white font-semibold ml-1'>{userChat.name}</p>
             </div>
         </div>
         : userInfo == 0 ?  

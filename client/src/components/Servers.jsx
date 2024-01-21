@@ -4,8 +4,7 @@ import contextValue from "../context/user/userContext";
     
 const Servers = () => {
     const context = useContext(contextValue);
-    const {userInfo, setUserInfo} = context;
-    console.log(userInfo);
+    const { setUserInfo } = context;
   return (
     <div className="flex flex-col gap-2">
       {/* here will be the list of the servers where the user is part of */}

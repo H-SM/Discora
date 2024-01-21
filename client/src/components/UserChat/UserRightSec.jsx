@@ -8,7 +8,7 @@ import UserCard from '../ServerLists/UserCard';
     
 const UserRightSec = () => {
     const context = useContext(contextValue);
-    const {userInfo} = context;
+    const {userInfo, userChat} = context;
 
   return (
     <div className={clsx(`w-full h-full border-l-2 border-gray-600/20`,
@@ -17,7 +17,9 @@ const UserRightSec = () => {
       {userInfo == 1?
         <div>
           <div className='absolute w-[6rem] h-[6rem] mt-[3rem] ml-3 rounded-full bg-[#232428] z-10 flex justify-center items-center'>
-          <img src={logo} alt="logo" className='relative w-[5.3rem] bg-white/5 rounded-full object-cover '/>
+
+          <img src= {`${userChat.img ? userChat.img : logo}`} alt="logo" className='relative w-[5.3rem] bg-white/5 rounded-full object-cover '/>
+       
           <div className='absolute rounded-full bg-[#232428] w-5 h-5 bottom-[0.5rem] right-[0.5rem] flex items-center justify-center'>
             <div className='absolute rounded-full bg-green-600 w-3 h-3'/>
           </div>
@@ -27,12 +29,12 @@ const UserRightSec = () => {
           <div className='w-full h-full flex justify-start items-center flex-col gap-y-3.5'>
             <div className='w-[35vh] h-fit bg-[#111214] rounded-md flex flex-col justify-between items-start'>
               <div className='w-[33vh] flex flex-col mx-2 mt-2 pb-2 justify-start items-start border-white/20 border-b-[0.01rem]'>
-                <p className='font-bold text-[1.1rem]'>Sid</p>
-                <p className='font-semibold text-[0.7rem]'>sid_the_sloth</p>
+                <p className='font-bold text-[1.1rem]'>{userChat.name}</p>
+                <p className='font-semibold text-[0.7rem]'>{userChat.userid}</p>
               </div>
               <div className='w-[33vh] flex flex-col mt-2 mx-2 pb-2 justify-start items-start gap-1 border-white/20 border-b-[0.01rem]'>
                 <p className='font-extrabold text-[0.65rem]'>DISCORA MEMBER SINCE</p>
-                <p className='font-medium text-[0.7rem] font-roboto'>Jul 23,2020</p>
+                <p className='font-medium text-[0.7rem] font-roboto'>{userChat.joined}</p>
               </div>
               <div className='w-[33vh] flex flex-col mt-2 mx-2 pb-2 justify-start items-start h-[5rem] gap-1'>
                 <p className='font-extrabold text-[0.65rem]'>NOTE</p>
@@ -66,27 +68,9 @@ const UserRightSec = () => {
             <RoleTitle title="booster" color="green"/>
             <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="green"/>
             <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="green"/>
-            <RoleTitle title="peps" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
-            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="cyan"/>
+            <RoleTitle title="peps" color="orange"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="orange"/>
+            <UserCard name="sid" img="https://i.redd.it/3fc3wd5xwf171.png" color="orange"/>
         </div>
       }
     </div>

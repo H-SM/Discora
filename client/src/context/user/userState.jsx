@@ -4,6 +4,14 @@ import userContext from "./userContext";
 const UserState = (props) =>{
     const userInitial = [];
     const [userInfo, setUserInfo] = useState(0);
+    const [userChat, setUserChat] = useState({});
+    const [myDetail, SetMyDetail] = useState({
+        name: "h-s-m",
+        img: "https://avatars.githubusercontent.com/u/98532264?v=4",
+        userid: "h-s-m",
+        joined: "Jul 23,2020",
+        color: "orange"
+    });
 
     // const getuserinfo = async () => {
     //   try{
@@ -21,7 +29,7 @@ const UserState = (props) =>{
     // }
 
     return (
-        <userContext.Provider value={{userInfo, setUserInfo}}>
+        <userContext.Provider value={{userInfo, setUserInfo, userChat, setUserChat, myDetail, SetMyDetail}}>
             {props.children}
         </userContext.Provider>
     );
