@@ -11,7 +11,7 @@ const UserRightSec = () => {
     const {userInfo, userChat} = context;
 
   return (
-    <div className={clsx(`w-full h-full border-l-2 border-gray-600/20`,
+    <div className={clsx(`w-[30rem] h-full border-l-2 border-gray-600/20`,
     userInfo == 1 ? `bg-[#232428]`: userInfo == 0 ?`bg-[#303238]` : `bg-[#27292d]`
     )} >
       {userInfo == 1?
