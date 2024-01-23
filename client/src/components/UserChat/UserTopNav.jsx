@@ -4,14 +4,14 @@ import logo from "../../assets/logo_discora_nobg_new.png";
     
 const UserTopNav = () => {
     const context = useContext(contextValue);
-    const {userInfo, userChat} = context;
+    const {userInfo, server, userChat, serverChat} = context;
   return (
     <div className='bg-[#313338] h-[3rem] flex flex-row justify-between  border-b-2 border-black/20'>
         <div className='h-[3rem] flex flex-row'>
         <div className='w-[14rem] 2xl:w-[14.5rem] bg-black/20 flex justify-center items-center'>
             {userInfo == 2 ?
             <div className='w-[15rem] h-full px-3 flex justify-between items-center'>
-                <p className='font-medium text-white text-[0.9rem] pl-1'>hsm-s's server</p>
+                <p className='font-medium text-white text-[0.9rem] pl-1'>{server.name}</p>
                 <svg viewBox="0 -4.5 20 20" className='w-3 h-3' version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>arrow_down [#338]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-220.000000, -6684.000000)" fill="currentColor"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M164.292308,6524.36583 L164.292308,6524.36583 C163.902564,6524.77071 163.902564,6525.42619 164.292308,6525.83004 L172.555873,6534.39267 C173.33636,6535.20244 174.602528,6535.20244 175.383014,6534.39267 L183.70754,6525.76791 C184.093286,6525.36716 184.098283,6524.71997 183.717533,6524.31405 C183.328789,6523.89985 182.68821,6523.89467 182.29347,6524.30266 L174.676479,6532.19636 C174.285736,6532.60124 173.653152,6532.60124 173.262409,6532.19636 L165.705379,6524.36583 C165.315635,6523.96094 164.683051,6523.96094 164.292308,6524.36583" id="arrow_down-[#338]"> </path> </g> </g> </g> </g></svg>
             </div> 
             : 
@@ -51,7 +51,7 @@ const UserTopNav = () => {
         <div className='w-full h-full flex items-center justify-start ml-2'>
             <div className='w-[7rem] h-full flex gap-1 items-center text-white justify-center'>
             <div className='opacity-50'><svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 21L17 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 21L11 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M20 9L4 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4 15L20 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></div>
-            <p className='text-[0.9rem] leading-[1.3rem] text-white font-semibold ml-1'>general</p>
+            <p className='text-[0.9rem] leading-[1.3rem] text-white font-semibold ml-1'>{serverChat.name}</p>
             </div>
         </div>
         }

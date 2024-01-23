@@ -6,7 +6,11 @@ const UserState = (props) =>{
     const [userInfo, setUserInfo] = useState(0);
     const [userChat, setUserChat] = useState({});
     const [serverChat, setServerChat] = useState({
-        name : "hi"
+        name : "general"
+    });
+    const [server, setServer] = useState({
+        name : "default"
+        // make the rest of the details for the servers soon
     });
     const [myDetail, SetMyDetail] = useState({
         name: "h-s-m",
@@ -32,7 +36,7 @@ const UserState = (props) =>{
     // }
 
     return (
-        <userContext.Provider value={{userInfo, setUserInfo, userChat, setUserChat, myDetail, SetMyDetail, serverChat, setServerChat}}>
+        <userContext.Provider value={{userInfo, setUserInfo, userChat, setUserChat, myDetail, SetMyDetail, serverChat, setServerChat, server, setServer}}>
             {props.children}
         </userContext.Provider>
     );
