@@ -4,7 +4,7 @@ import ProfileSecUser from './ProfileSecUser'
 
 const UserSideNav = () => {
   return (
-    <div className='w-[21.3rem] h-full bg-[#27292d] flex flex-col items-center justify-between '>
+    <div className='h-[93%] 2xl:h-full bg-[#27292d] flex flex-col items-center justify-between '>
         <UsersLeftSecUser/>
         <ProfileSecUser/>
     </div>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import contextValue from "../../context/user/userContext";
 import logo from "../../assets/logo_discora_nobg_new.png";
 import UserChatStart from './UserChatStart';
@@ -7,15 +7,12 @@ import DateLog from './DateLog';
 
 const UserChatSection = () => {
   const context = useContext(contextValue);
-  const {userInfo, userChat }  = context;
-
+  const { userInfo, userChat }  = context;
   return (
-    <div className='bg-[#313338] h-full
+    <div className='bg-[#313338] h-[93%] 2xl:h-full
     w-full 
     flex flex-col justify-end items-center gap-2'>
       <div className='w-full h-[51rem] bg-gray-700/5 text-white flex flex-col-reverse items-start justify-start mb-1 px-2 overflow-y-auto pl-4'>
-        {userInfo == 1 ?  
-          <>
             {/* 0 -> me  */}
             {/* 1 -> other  */}
             <ChatLog userType="1" chathere="hmmmm..."/> 
@@ -24,18 +21,14 @@ const UserChatSection = () => {
             <ChatLog userType="0" chathere="hi, I am here!!"/> 
             <DateLog date = {"21 january, 2024"}/>
             <UserChatStart/>
-          </>
-        // this is where the chat log will come in (prepare a cache for the loaded [bounded] chats)
-        :
-        <></>
-        }
+        {/* // this is where the chat log will come in (prepare a cache for the loaded [bounded] chats) */}
       </div>
       <div className='w-full h-fit px-3'>
       <div class="flex flex-row items-center relative w-full mb-4 rounded-md text-[1rem] outline-none bg-white/5 h-[2.8rem] font-roboto gap-3 px-2"> 
       <div class="flex items-center hover:cursor-pointer text-gray-300/80 hover:text-gray-300 transition ease-in-out duration-150">
             <svg class="w-6 h-6 " viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12.75 9C12.75 8.58579 12.4142 8.25 12 8.25C11.5858 8.25 11.25 8.58579 11.25 9L11.25 11.25H9C8.58579 11.25 8.25 11.5858 8.25 12C8.25 12.4142 8.58579 12.75 9 12.75H11.25V15C11.25 15.4142 11.5858 15.75 12 15.75C12.4142 15.75 12.75 15.4142 12.75 15L12.75 12.75H15C15.4142 12.75 15.75 12.4142 15.75 12C15.75 11.5858 15.4142 11.25 15 11.25H12.75V9Z" fill="currentColor"></path> </g></svg>
         </div>
-        <input type="search" id="default-search" class="block w-full text-md text-white/80 outline-none bg-transparent placeholder:text-gray-300/20" placeholder="Message @Sidhant"/>
+        <input type="search" id="default-search" class="block w-full text-md text-white/80 outline-none bg-transparent placeholder:text-gray-300/20" placeholder={userInfo == 1 ? `Message @${userChat.name}` : "message in #general"}/>
         
         <div class="flex items-center hover:cursor-pointer text-gray-300/80 hover:text-gray-300 transition ease-in-out duration-150">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 7V20M12 7H8.46429C7.94332 7 7.4437 6.78929 7.07533 6.41421C6.70695 6.03914 6.5 5.53043 6.5 5C6.5 4.46957 6.70695 3.96086 7.07533 3.58579C7.4437 3.21071 7.94332 3 8.46429 3C11.2143 3 12 7 12 7ZM12 7H15.5357C16.0567 7 16.5563 6.78929 16.9247 6.41421C17.293 6.03914 17.5 5.53043 17.5 5C17.5 4.46957 17.293 3.96086 16.9247 3.58579C16.5563 3.21071 16.0567 3 15.5357 3C12.7857 3 12 7 12 7ZM5 12H19V17.8C19 18.9201 19 19.4802 18.782 19.908C18.5903 20.2843 18.2843 20.5903 17.908 20.782C17.4802 21 16.9201 21 15.8 21H8.2C7.07989 21 6.51984 21 6.09202 20.782C5.71569 20.5903 5.40973 20.2843 5.21799 19.908C5 19.4802 5 18.9201 5 17.8V12ZM4.6 12H19.4C19.9601 12 20.2401 12 20.454 11.891C20.6422 11.7951 20.7951 11.6422 20.891 11.454C21 11.2401 21 10.9601 21 10.4V8.6C21 8.03995 21 7.75992 20.891 7.54601C20.7951 7.35785 20.6422 7.20487 20.454 7.10899C20.2401 7 19.9601 7 19.4 7H4.6C4.03995 7 3.75992 7 3.54601 7.10899C3.35785 7.20487 3.20487 7.35785 3.10899 7.54601C3 7.75992 3 8.03995 3 8.6V10.4C3 10.9601 3 11.2401 3.10899 11.454C3.20487 11.6422 3.35785 11.7951 3.54601 11.891C3.75992 12 4.03995 12 4.6 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>

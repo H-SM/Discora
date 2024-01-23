@@ -11,11 +11,11 @@ const UserRightSec = () => {
     const {userInfo, userChat} = context;
 
   return (
-    <div className={clsx(`w-[30rem] h-full border-l-2 border-gray-600/20`,
+    <div className={clsx(`w-[30rem] h-full 2xl:h-full border-l-2 border-gray-600/20`,
     userInfo == 1 ? `bg-[#232428]`: userInfo == 0 ?`bg-[#303238]` : `bg-[#27292d]`
     )} >
       {userInfo == 1?
-        <div>
+        <div className='w-full h-full'>
           <div className='absolute w-[6rem] h-[6rem] mt-[3rem] ml-3 rounded-full bg-[#232428] z-10 flex justify-center items-center'>
 
           <img src= {`${userChat.img ? userChat.img : logo}`} alt="logo" className='relative w-[5.3rem] bg-white/5 rounded-full object-cover '/>
@@ -26,7 +26,7 @@ const UserRightSec = () => {
           </div>
           <div className='relative w-full h-[6rem] bg-white '/>
           <div className=' w-full h-[4rem] flex justify-end items-center bg-[#232428]'/>  
-          <div className='w-full h-full flex justify-start items-center flex-col gap-y-3.5'>
+          <div className='w-full h-full flex justify-start items-center flex-col gap-y-3.5 px-3'>
             <div className='w-[35vh] h-fit bg-[#111214] rounded-md flex flex-col justify-between items-start'>
               <div className='w-[33vh] flex flex-col mx-2 mt-2 pb-2 justify-start items-start border-white/20 border-b-[0.01rem]'>
                 <p className='font-bold text-[1.1rem]'>{userChat.name}</p>

@@ -4,7 +4,7 @@ import UserChatHere from './UserChatHere'
 
 const UserChat = () => {
   return (
-    <div className='w-full h-full flex flex-col'>
+    <div className='w-[97%] h-full flex flex-col'>
       <UserTopNav/>
       <UserChatHere/>
     </div>

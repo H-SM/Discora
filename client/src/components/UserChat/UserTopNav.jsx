@@ -8,7 +8,7 @@ const UserTopNav = () => {
   return (
     <div className='bg-[#313338] h-[3rem] flex flex-row justify-between  border-b-2 border-black/20'>
         <div className='h-[3rem] flex flex-row'>
-        <div className='w-[15rem] bg-black/20 flex justify-center items-center'>
+        <div className='w-[14rem] 2xl:w-[14.5rem] bg-black/20 flex justify-center items-center'>
             {userInfo == 2 ?
             <div className='w-[15rem] h-full px-3 flex justify-between items-center'>
                 <p className='font-medium text-white text-[0.9rem] pl-1'>hsm-s's server</p>

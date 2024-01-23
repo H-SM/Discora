@@ -10,10 +10,8 @@ const UserChatHere = () => {
     const {userInfo, setUserinfo} = context;
   return (
     <div className='w-full h-full flex flex-row justify-between'>
-        {/* <div className='h-full flex flex-row'> */}
         <UserSideNav/>
         {userInfo == 0 ? <UserFriendsMenu/> : <UserChatSection/>} 
-        {/* </div>  */}
         <UserRightSec/>
     </div>
   )

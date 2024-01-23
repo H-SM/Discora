@@ -5,6 +5,9 @@ const UserState = (props) =>{
     const userInitial = [];
     const [userInfo, setUserInfo] = useState(0);
     const [userChat, setUserChat] = useState({});
+    const [serverChat, setServerChat] = useState({
+        name : "hi"
+    });
     const [myDetail, SetMyDetail] = useState({
         name: "h-s-m",
         img: "https://avatars.githubusercontent.com/u/98532264?v=4",
@@ -29,7 +32,7 @@ const UserState = (props) =>{
     // }
 
     return (
-        <userContext.Provider value={{userInfo, setUserInfo, userChat, setUserChat, myDetail, SetMyDetail}}>
+        <userContext.Provider value={{userInfo, setUserInfo, userChat, setUserChat, myDetail, SetMyDetail, serverChat, setServerChat}}>
             {props.children}
         </userContext.Provider>
     );
