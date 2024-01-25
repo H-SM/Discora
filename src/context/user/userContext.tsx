@@ -1,4 +1,4 @@
-import React, { Children, Dispatch, SetStateAction, createContext, useState } from "react";
+import React, { Dispatch, SetStateAction, createContext, useState } from "react";
 import UserChat from "../../components/UserChat/UserChat";
 
 export interface UserChat {

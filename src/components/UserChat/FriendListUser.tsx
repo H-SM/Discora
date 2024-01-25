@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import contextValue, { UserContext } from "../../context/user/userContext";
+import { useContext, useEffect } from 'react'
+import { UserContext } from "../../context/user/userContext";
 
     
 const FriendListUser = () => {

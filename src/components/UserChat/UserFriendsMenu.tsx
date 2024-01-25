@@ -1,4 +1,3 @@
-import React from 'react'
 import ListOfUsers from './ListOfUsers'
 
 const UserFriendsMenu = () => {

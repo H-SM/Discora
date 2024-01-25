@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ListOfUsers = () => {
   return (
     <div className='w-full flex flex-col justify-start items-center mt-2 overflow-y-auto h-[79vh]'>

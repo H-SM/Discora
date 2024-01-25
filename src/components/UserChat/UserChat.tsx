@@ -1,4 +1,3 @@
-import React from 'react'
 import UserTopNav from './UserTopNav'
 import UserChatHere from './UserChatHere'
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import contextValue, { UserContext } from "../../context/user/userContext";
+import { UserContext } from "../../context/user/userContext";
 
 interface PropsHere {
   userType : string,

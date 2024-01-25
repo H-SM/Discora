@@ -1,4 +1,3 @@
-import React from 'react'
 import UsersLeftSecUser from './UsersLeftSecUser'
 import ProfileSecUser from './ProfileSecUser'
 

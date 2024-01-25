@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
+import { useContext} from 'react'
 import logo from "../../assets/logo_discora_nobg_new.png"
 import clsx from 'clsx';
-import contextValue, { UserContext } from "../../context/user/userContext";
+import { UserContext } from "../../context/user/userContext";
 import RoleTitle from '../ServerLists/RoleTitle';
 import UserCard from '../ServerLists/UserCard';
 

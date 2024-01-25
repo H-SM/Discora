@@ -1,4 +1,3 @@
-import React from "react";
 import UserMessage from "./UserMessage";
 import Servers from "./Servers";
 import AddServer from "./AddServer";

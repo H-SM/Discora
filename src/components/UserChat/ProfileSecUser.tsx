@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ProfileSecUser = () => {
   return (
     <div className='bg-black/30 h-[3.25rem] w-full flex flex-row gap-2 justify-between items-center'>

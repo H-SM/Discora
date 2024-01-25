@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import contextValue, { UserContext } from "../../context/user/userContext";
+import { useContext } from 'react'
+import { UserContext } from "../../context/user/userContext";
 import logo from "../../assets/logo_discora_nobg_new.png";
 
 const UserChatStart = () => {

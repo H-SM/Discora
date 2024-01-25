@@ -1,5 +1,3 @@
-import React from "react";
-
 const DiscoverServers = () => {
   return (
     <div className="active:bg-green-400 hover:bg-green-400 bg-[#313338] w-[3rem] h-[3rem] rounded-full hover:rounded-xl transition ease-in-out duration-150 flex items-center justify-center z-5 text-green-400 hover:text-white">

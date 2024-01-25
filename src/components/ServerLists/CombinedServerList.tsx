@@ -1,4 +1,3 @@
-import React from 'react'
 import TextServer from './TextServer'
 import TitleSection from './TitleSection'
 import VoiceServer from './VoiceServer'

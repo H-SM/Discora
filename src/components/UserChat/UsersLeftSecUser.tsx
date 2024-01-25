@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
+import { useContext } from 'react'
 import FriendListUser from './FriendListUser'
 import CombinedServerList from '../ServerLists/CombinedServerList'
-import contextValue, { UserContext } from "../../context/user/userContext";
+import { UserContext } from "../../context/user/userContext";
 
     
 const UsersLeftSecUser = () => {

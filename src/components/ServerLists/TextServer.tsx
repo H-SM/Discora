@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import contextValue, { UserContext } from "../../context/user/userContext";
+import { UserContext } from "../../context/user/userContext";
 
 interface TextServerProps {
   title: string;
