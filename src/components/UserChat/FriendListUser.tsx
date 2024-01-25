@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react'
-import contextValue from "../../context/user/userContext";
+import contextValue, { UserContext } from "../../context/user/userContext";
 
     
 const FriendListUser = () => {
-    const context = useContext(contextValue);
+    const context = useContext(UserContext);
     const { setUserInfo, userChat, setUserChat } = context!;
 
     useEffect(() => {

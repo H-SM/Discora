@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import contextValue from "../../context/user/userContext";
+import contextValue, { UserContext } from "../../context/user/userContext";
 import UserChatStart from './UserChatStart';
 import ChatLog from './ChatLog';
 import DateLog from './DateLog';
 
 const UserChatSection = () => {
-  const context = useContext(contextValue);
+  const context = useContext(UserContext);
 
   const { userInfo, userChat }  = context!;
   return (

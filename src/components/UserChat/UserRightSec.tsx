@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
 import logo from "../../assets/logo_discora_nobg_new.png"
 import clsx from 'clsx';
-import contextValue from "../../context/user/userContext";
+import contextValue, { UserContext } from "../../context/user/userContext";
 import RoleTitle from '../ServerLists/RoleTitle';
 import UserCard from '../ServerLists/UserCard';
 
     
 const UserRightSec = () => {
-    const context = useContext(contextValue);
+    const context = useContext(UserContext);
     const {userInfo, userChat} = context!;
 
   return (

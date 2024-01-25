@@ -3,10 +3,10 @@ import UserSideNav from './UserSideNav';
 import UserFriendsMenu from './UserFriendsMenu';
 import UserRightSec from './UserRightSec';
 import UserChatSection from './UserChatSection';
-import contextValue from '../../context/user/userContext';
+import contextValue, { UserContext } from '../../context/user/userContext';
 
 const UserChatHere = () => {
-  const context = useContext(contextValue);
+  const context = useContext(UserContext);
   const { userInfo, setUserInfo } = context!;
 
   return (

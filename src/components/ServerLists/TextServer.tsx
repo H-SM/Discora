@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import contextValue from "../../context/user/userContext";
+import contextValue, { UserContext } from "../../context/user/userContext";
 
 interface TextServerProps {
   title: string;
@@ -7,7 +7,7 @@ interface TextServerProps {
 
 const textServer: React.FC<TextServerProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
-  const context = useContext(contextValue);
+  const context = useContext(UserContext);
   const {setServerChat} = context!;
   return (
     <div className='w-[14rem] h-fit ml-2 hover:bg-white/5 text-gray-300 flex justify-between items-center rounded-md px-2 py-1 opacity-70 hover:opacity-100'

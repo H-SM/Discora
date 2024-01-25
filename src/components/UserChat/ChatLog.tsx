@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import contextValue from "../../context/user/userContext";
+import contextValue, { UserContext } from "../../context/user/userContext";
 
 interface PropsHere {
   userType : string,
@@ -8,7 +8,7 @@ interface PropsHere {
 
 const ChatLog : React.FC<PropsHere> = (props) => {
     
-    const context = useContext(contextValue);
+    const context = useContext(UserContext);
     const { userChat, myDetail} = context!;
   return (
     <div className='w-full h-[3rem] bg-gray-700/5 text-white flex items-center justify-start mb-1 px-2 gap-2'>

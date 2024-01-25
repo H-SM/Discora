@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react'
-import contextValue from "../../context/user/userContext";
+import contextValue, { UserContext } from "../../context/user/userContext";
 import logo from "../../assets/logo_discora_nobg_new.png";
 
 const UserChatStart = () => {
-    const context = useContext(contextValue);
+    const context = useContext(UserContext);
     const { userChat, userInfo, serverChat } = context!;
 
     // useEffect(() => {

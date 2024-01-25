@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import contextValue from "../context/user/userContext";
+import contextValue, { UserContext } from "../context/user/userContext";
 
     
 const Servers = () => {
-    const context = useContext(contextValue);
+    const context = useContext(UserContext);
     const { setUserInfo, setServer, setServerChat } = context!;
     const handleClick : (namer: string) => void = (namer) => {
       setUserInfo(2);

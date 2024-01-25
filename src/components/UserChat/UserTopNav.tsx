@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
-import contextValue from "../../context/user/userContext";
+import contextValue, { UserContext } from "../../context/user/userContext";
 import logo from "../../assets/logo_discora_nobg_new.png";
     
 const UserTopNav = () => {
-    const context = useContext(contextValue);
+    const context = useContext(UserContext);
     const {userInfo, server, userChat, serverChat} = context!;
   return (
     <div className='bg-[#313338] h-[3rem] flex flex-row justify-between  border-b-2 border-black/20'>

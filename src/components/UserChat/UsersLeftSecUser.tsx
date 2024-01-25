@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import FriendListUser from './FriendListUser'
 import CombinedServerList from '../ServerLists/CombinedServerList'
-import contextValue from "../../context/user/userContext";
+import contextValue, { UserContext } from "../../context/user/userContext";
 
     
 const UsersLeftSecUser = () => {
-    const context = useContext(contextValue);
+    const context = useContext(UserContext);
     const {userInfo, setUserInfo } = context!;
 
   return (
