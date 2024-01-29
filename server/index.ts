@@ -1,6 +1,8 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import pool from "./data";
+import githubRoutes from './routes/github-routes';
+import googleRoutes from './routes/google-routes';
 const app : Express = express();
 
 app.use(cors());
@@ -9,7 +11,8 @@ app.use(express.json());
 const port = process.env.PORT || "8000";
 
 //routes 
-
+app.use('/api/github', githubRoutes);
+app.use('/api/google', googleRoutes);
 
 app.post("/todo" ,async (req : Request,res : Response) => {
     try {
