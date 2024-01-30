@@ -1,4 +1,3 @@
-import React from "react";
 import ServerList from "../components/ServerList";
 import UserChat from "../components/UserChat/UserChat";
 
