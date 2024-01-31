@@ -14,7 +14,7 @@ export interface myDetailer {
   name: string;
   img: string;
   userid: string;
-  joined: string;
+  joined: number;
   color: string;
 }
 
@@ -64,7 +64,7 @@ const defaultState = {
     name: "h-s-m",
     img: "https://avatars.githubusercontent.com/u/98532264?v=4",
     userid: "h-s-m",
-    joined: "Jul 23,2020",
+    joined: Date.now(),
     color: "orange"
   },
   SetMyDetail: (myDetail : myDetailer) => {},
@@ -96,7 +96,7 @@ const UserProvider = ({children} : UserProviderProps) => {
       name: "h-s-m",
       img: "https://avatars.githubusercontent.com/u/98532264?v=4",
       userid: "h-s-m",
-      joined: "Jul 23,2020",
+      joined: Date.now(),
       color: "orange"
   });
   return (

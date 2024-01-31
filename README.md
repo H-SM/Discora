@@ -8,7 +8,7 @@
 
 
 <div align="center">
-    <img src="https://imgur.com/pZhJVlJ.png" width=150"/>
+    <img src="**https://imgur.com/pZhJVlJ.png**" width=150"/>
     <p>Welcome to <b>Discora</b> ! Your ultimate chat sanctuary.
     </p>
     <p>
