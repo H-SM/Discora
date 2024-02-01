@@ -1,31 +1,13 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import pool from "./data";
-const expressJwt = require("express-jwt");
-import jwks from "jwks-rsa";
-import axios from "axios";
 
 const app : Express = express();
 app.use(cors());
 app.use(express.json());
 
-const port = process.env.PORT || "8000";
 
-//routes 
-
-
-//verifying jwt token here 
-const verifyJwt = expressJwt.jwt({
-    secret : jwks.expressJwtSecret({
-        cache : true,
-        rateLimit : true,
-        jwksRequestsPerMinute : 5,
-        jwksUri : 'https://dev-046fg2rv0glrfkho.us.auth0.com/.well-known/jwks.json'
-    }),
-    audience : 'this is HSM here',
-    issuer : 'https://dev-046fg2rv0glrfkho.us.auth0.com/',
-    algorithms : ['RS256'] 
-}).unless({path:['/']});
+const port = process.env.PORT || 8080;
 
 //for the above path the verification over the jwt wont be used 
 
@@ -40,44 +22,6 @@ app.post("/todo" ,async (req : Request,res : Response) => {
     } 
 });
 
-
-
-// const jwtCheck = auth({
-//     audience: 'http://localhost:8000/',
-//     issuerBaseURL: 'https://dev-zcrh4mqbacadm6rh.us.auth0.com/',
-//     tokenSigningAlg: 'RS256'
-//   });
-
-app.get("/" , (req : Request,res : Response) => {
-    res.send("Discora Backend..!");
-});
-
-
-app.get("/user" , (req : Request,res : Response) => {
-    res.send("route made for user details here");
-});
-
-app.get("/protected" , (req : Request,res : Response) => {
-    res.send("protected route made for the user's details to the api!");
-});
-
-// app.get('/api/public', function(req, res) {
-//     res.json({
-//       message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.'
-//     });
-//   });
-  
-// app.get('/api/private', checkJwt, function(req, res) {
-//     res.json({
-//       message: 'Hello from a private endpoint! You need to be authenticated to see this.'
-//     });
-// });
-
-// app.use(jwtCheck);
-
-// app.get('/autherized', jwtCheck, (req: Request, res : Response) => {
-//     res.send('Secured Resource here!!');
-// })
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
