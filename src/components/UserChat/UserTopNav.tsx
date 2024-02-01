@@ -1,10 +1,19 @@
 import { useContext } from 'react'
 import { UserContext } from "../../context/user/userContext";
 import logo from "../../assets/logo_discora_nobg_new.png";
+import { useNavigate } from 'react-router-dom';
     
 const UserTopNav = () => {
+    const navigate = useNavigate();
     const context = useContext(UserContext);
-    const {userInfo, server, userChat, serverChat} = context!;
+    const {userInfo, server, userChat, serverChat, logoutUser} = context!;
+
+    const handlelogout = () => {
+        logoutUser();
+        setTimeout(() => {
+            navigate("/login");
+        }, 500);
+    }
   return (
     <div className='bg-[#313338] h-[3rem] flex flex-row justify-between  border-b-2 border-black/20'>
         <div className='h-[3rem] flex flex-row'>
@@ -48,6 +57,13 @@ const UserTopNav = () => {
             <div className='w-[7rem] h-full flex items-center justify-center'>
                 <button className='px-2 rounded-md bg-green-700 font-semibold'>Add Friend</button>
             </div>
+
+            {/* REMOVE THIS AFTER TESTING  */}
+            <div className='w-[7rem] h-full flex items-center justify-center'>
+                <button className='px-2 rounded-md bg-green-700 font-semibold' onClick={handlelogout}>logOut</button>
+            </div>
+            {/*  */}
+
         </div>
         :
         <div className='w-full h-full flex items-center justify-start ml-2'>

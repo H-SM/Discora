@@ -3,13 +3,14 @@ import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/user/userContext";
 import logo from "../assets/logo_discora_nobg_new.png"
 import { useNavigate } from "react-router-dom";
-
+import { BsGithub , BsGoogle } from 'react-icons/bs';
+import AuthSocialButton from "../components/loginPage/AuthSocialButton";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const context = useContext(UserContext);
-  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase } = context!;
+  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase, signInUserGitHub, signInUserGoogle } = context!;
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -68,10 +69,35 @@ const Login = () => {
         </form>
     </div>
 
-    <div className="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
+    {/* <div className="flex items-center justify-center py-4 text-center bg-gray-50 dark:bg-gray-700">
         <span className="text-sm text-gray-600 dark:text-gray-200">Don't have an account? </span>
 
         <a href="#" className="mx-2 text-sm font-bold text-blue-500 dark:text-blue-400 hover:underline">Register</a>
+    </div> */}
+    <div className="my-6 mx-2">
+                    <div className="relative"> 
+                    {/* 50 */}
+                        <div className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-gray-300"/>
+                        </div>
+                        <div className="relative flex justify-center text-sm">
+                            <span className="bg-gray-800 px-2 text-gray-500">
+                                Or continue with
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div className="mt-6 flex gap-2">
+                        <AuthSocialButton 
+                        icon={BsGithub}
+                        onClick={signInUserGitHub}
+                        />
+                        
+                        <AuthSocialButton 
+                        icon={BsGoogle}
+                        onClick={signInUserGoogle}
+                        />
+                    </div>
     </div>
 </div>  
 </div>    

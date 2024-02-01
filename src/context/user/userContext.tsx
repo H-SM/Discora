@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import UserChat from "../../components/UserChat/UserChat";
 import auth from "../../firebase"
-import { User, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { User, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithRedirect, signOut, updateProfile } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth/cordova";
 export interface UserChat {
   name: string;
   img: string;
@@ -42,6 +43,8 @@ export interface UserContextInterface {
   SetMyDetail: Dispatch<SetStateAction<myDetailer>>,
   RegisterUser: (email: string, name: string, password: string) => void;
   signInUser: (email: string, password: string) => void;
+  signInUserGoogle: () => void;
+  signInUserGitHub: () => void;
   logoutUser: () => void;
   forgotPassword: (email: string) => Promise<void>;
   UserDetailsFirebase: User | null,
@@ -147,6 +150,28 @@ useEffect(() => {
       // setLoading -> false
     }
   }
+  //TODO: implement ALL THE LOADING HERE NOT IN THE HOME.JSX (prevents the time out thing)
+  const signInUserGoogle = () => {
+    try {
+      signInWithRedirect(auth, new GoogleAuthProvider())
+      .then(res => console.log(res));
+    }catch(err : any) {
+      console.error(err.message);
+    }finally {
+      // setLoading -> false
+    }
+  }
+
+  const signInUserGitHub = () => {
+    try {
+      signInWithRedirect(auth, new GithubAuthProvider())
+      .then(res => console.log(res));
+    }catch(err : any) {
+      console.error(err.message);
+    }finally {
+      // setLoading -> false
+    }
+  }
 
   const logoutUser = () => {
     signOut(auth)
@@ -156,7 +181,7 @@ useEffect(() => {
     return sendPasswordResetEmail(auth, email);
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat,server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase}}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat,server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGoogle, signInUserGitHub}}>
       {children}
     </UserContext.Provider>
   )
