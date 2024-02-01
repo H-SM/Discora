@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import ServerList from "../components/ServerList";
 import UserChat from "../components/UserChat/UserChat";
 import { UserContext } from "../context/user/userContext";
@@ -10,13 +10,22 @@ const Home = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const { UserDetailsFirebase } = context;
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
-    if(!UserDetailsFirebase) navigate("/login"); 
-  })
+    setLoader(true);
+    setTimeout(() => {
+      if (!UserDetailsFirebase) navigate("/login");
+      else setLoader(false);
+    }, 500);
+  },[]);
   return (
     <div className="w-[100%] h-[100vh] flex flex-row">
-      <ServerList />
-      <UserChat />
+      {!loader &&
+        <>
+          <ServerList />
+          <UserChat />
+        </>
+      }
     </div>
   );
 };

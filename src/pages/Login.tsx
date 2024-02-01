@@ -1,17 +1,25 @@
 
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/user/userContext";
 import logo from "../assets/logo_discora_nobg_new.png"
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
+  const navigate = useNavigate();
 
   const context = useContext(UserContext);
-  const { RegisterUser } = context!;
+  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase } = context!;
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    if(UserDetailsFirebase) {
+      console.log(UserDetailsFirebase);
+      navigate("/");
+    } 
+  })
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
     setState: React.Dispatch<React.SetStateAction<string>>
@@ -19,6 +27,12 @@ const Login = () => {
     setState(e.target.value);
   };
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (email != "" && name != "" && password != "") RegisterUser(email, name, password);
+    else if(email != "" && password != "") signInUser(email, password);
+    else if(email != "") forgotPassword(email).then(() => setEmail(""))
+  };
   return (
    <div className="w-full h-[100vh] flex justify-center items-center">             
   <div className="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -31,7 +45,7 @@ const Login = () => {
 
         <p className="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
 
-        <form className="text-white">
+        <form className="text-white" onSubmit={handleSubmit}>
             <div className="w-full mt-4">
                 <input className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="email" placeholder="Email Address" aria-label="Email Address" value={email} onChange={(e) => handleInputChange(e, setEmail)}/>
             </div>

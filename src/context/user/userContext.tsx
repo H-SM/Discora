@@ -41,7 +41,7 @@ export interface UserContextInterface {
   myDetail: myDetailer,
   SetMyDetail: Dispatch<SetStateAction<myDetailer>>,
   RegisterUser: (email: string, name: string, password: string) => void;
-  signInUser: (email: string, name: string, password: string) => void;
+  signInUser: (email: string, password: string) => void;
   logoutUser: () => void;
   forgotPassword: (email: string) => Promise<void>;
   UserDetailsFirebase: User | null,
@@ -137,7 +137,7 @@ useEffect(() => {
     }
   };
 
-  const signInUser = (email : string, name : string, password : string) => {
+  const signInUser = (email : string, password : string) => {
     try {
       signInWithEmailAndPassword(auth, email, password)
       .then(res => console.log(res));
