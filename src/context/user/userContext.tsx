@@ -1,6 +1,7 @@
-import React, { Dispatch, SetStateAction, createContext, useState } from "react";
+import React, { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import UserChat from "../../components/UserChat/UserChat";
-
+import auth from "../../firebase"
+import { User, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 export interface UserChat {
   name: string;
   img: string;
@@ -39,6 +40,12 @@ export interface UserContextInterface {
   setServer: Dispatch<SetStateAction<Server>>,
   myDetail: myDetailer,
   SetMyDetail: Dispatch<SetStateAction<myDetailer>>,
+  RegisterUser: (email: string, name: string, password: string) => void;
+  signInUser: (email: string, name: string, password: string) => void;
+  logoutUser: () => void;
+  forgotPassword: (email: string) => Promise<void>;
+  UserDetailsFirebase: User | null,
+  setUserDetailsFirebase: Dispatch<SetStateAction<User | null>>,
 }
 
 const defaultState = {
@@ -68,6 +75,8 @@ const defaultState = {
     color: "orange"
   },
   SetMyDetail: (myDetail : myDetailer) => {},
+  UserDetailsFirebase: null as User | null, // or initialize with an empty object if you prefer {}
+  setUserDetailsFirebase: (user: User) => {},
 } as UserContextInterface
 
 export const UserContext = createContext(defaultState);
@@ -88,10 +97,8 @@ const UserProvider = ({children} : UserProviderProps) => {
   const [serverChat, setServerChat] = useState({
       name : "general"
   });
-  const [server, setServer] = useState({
-      name : "default"
-      // make the rest of the details for the servers soon
-  });
+  const [UserDetailsFirebase, setUserDetailsFirebase] = useState<User | null>(null!);
+
   const [myDetail, SetMyDetail] = useState({
       name: "h-s-m",
       img: "https://avatars.githubusercontent.com/u/98532264?v=4",
@@ -99,8 +106,57 @@ const UserProvider = ({children} : UserProviderProps) => {
       joined: Date.now(),
       color: "orange"
   });
+  const [server, setServer] = useState({
+    name : "default"
+    // make the rest of the details for the servers soon
+});
+useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (res) => {
+      res ? setUserDetailsFirebase(res) : setUserDetailsFirebase(null);
+      // TODO: do the abv for myDetails
+    });
+
+    return unsubscribe;
+});
+
+  //TODO: check the types here
+  const RegisterUser = (email : string, name : string, password : string) => {
+    try {
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      return updateProfile(auth.currentUser!, {
+        displayName : name
+      })
+    })
+    .then(res => console.log(res));
+    }catch{(err : any) => {
+      console.error(err.message);
+    }
+    }finally {
+      // setLoading -> false
+    }
+  };
+
+  const signInUser = (email : string, name : string, password : string) => {
+    try {
+      signInWithEmailAndPassword(auth, email, password)
+      .then(res => console.log(res));
+    }catch(err : any) {
+      console.error(err.message);
+    }finally {
+      // setLoading -> false
+    }
+  }
+
+  const logoutUser = () => {
+    signOut(auth)
+  }
+
+  const forgotPassword = (email : string) => {
+    return sendPasswordResetEmail(auth, email);
+  }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat,server, setServer, myDetail, SetMyDetail}}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat,server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase}}>
       {children}
     </UserContext.Provider>
   )

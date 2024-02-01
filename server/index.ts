@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 
 //for the above path the verification over the jwt wont be used 
 
@@ -22,6 +22,9 @@ app.post("/todo" ,async (req : Request,res : Response) => {
     } 
 });
 
+app.get("/",async (req:Request, res : Response) => {
+    res.send("Discora Beackend!!! \n designed by HSM \n © 2024 Discora. All rights reserved.")
+})
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
