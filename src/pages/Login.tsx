@@ -4,17 +4,17 @@ import { UserContext } from "../context/user/userContext";
 import logo from "../assets/logo_discora_nobg_new.png"
 import { useNavigate } from "react-router-dom";
 import { BsGithub , BsGoogle } from 'react-icons/bs';
-import AuthSocialButton from "../components/loginPage/AuthSocialButton";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const context = useContext(UserContext);
-  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase, signInUserGitHub, signInUserGoogle } = context!;
+  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase, signInUserGoogle, signInUserGitHub } = context!;
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
+  
   useEffect(() => {
     if(UserDetailsFirebase) {
       console.log(UserDetailsFirebase);
@@ -88,15 +88,12 @@ const Login = () => {
                     </div>
                     
                     <div className="mt-6 flex gap-2">
-                        <AuthSocialButton 
-                        icon={BsGithub}
-                        onClick={signInUserGitHub}
-                        />
-                        
-                        <AuthSocialButton 
-                        icon={BsGoogle}
-                        onClick={signInUserGoogle}
-                        />
+                        <button type='button' onClick={signInUserGoogle} className='inline-flex w-full justify-center rounded-md bg-transparent px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0'>
+                        <BsGoogle /> 
+                        </button>
+                        <button type='button' onClick={signInUserGitHub} className='inline-flex w-full justify-center rounded-md bg-transparent px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0'>
+                        <BsGithub /> 
+                        </button>
                     </div>
     </div>
 </div>  

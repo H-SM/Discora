@@ -1,8 +1,7 @@
 import React, { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import UserChat from "../../components/UserChat/UserChat";
-import auth from "../../firebase"
-import { User, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithRedirect, signOut, updateProfile } from "firebase/auth";
-import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth/cordova";
+import { GithubAuthProvider, GoogleAuthProvider, User, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, signOut, updateProfile } from "firebase/auth";
+import auth from "../../firebase";
 export interface UserChat {
   name: string;
   img: string;
@@ -43,8 +42,8 @@ export interface UserContextInterface {
   SetMyDetail: Dispatch<SetStateAction<myDetailer>>,
   RegisterUser: (email: string, name: string, password: string) => void;
   signInUser: (email: string, password: string) => void;
-  signInUserGoogle: () => void;
   signInUserGitHub: () => void;
+  signInUserGoogle: () => void;
   logoutUser: () => void;
   forgotPassword: (email: string) => Promise<void>;
   UserDetailsFirebase: User | null,
@@ -59,17 +58,17 @@ const defaultState = {
     joined: "",
     color: ""
   },
-  setUserChat: (userChat : UserChat) => {},
+  setUserChat: (userChat: UserChat) => { },
   serverChat: {
     name: "general"
   },
-  setServerChat: (serverChat : ServerChat) => {},
+  setServerChat: (serverChat: ServerChat) => { },
   userInfo: 0,
-  setUserInfo: (userInfo : number) => {},
+  setUserInfo: (userInfo: number) => { },
   server: {
-    name : "default",
+    name: "default",
   },
-  setServer:(server : Server) => {},
+  setServer: (server: Server) => { },
   myDetail: {
     name: "h-s-m",
     img: "https://avatars.githubusercontent.com/u/98532264?v=4",
@@ -77,18 +76,18 @@ const defaultState = {
     joined: Date.now(),
     color: "orange"
   },
-  SetMyDetail: (myDetail : myDetailer) => {},
+  SetMyDetail: (myDetail: myDetailer) => { },
   UserDetailsFirebase: null as User | null, // or initialize with an empty object if you prefer {}
-  setUserDetailsFirebase: (user: User) => {},
+  setUserDetailsFirebase: (user: User) => { },
 } as UserContextInterface
 
 export const UserContext = createContext(defaultState);
 
 type UserProviderProps = {
-  children : React.ReactNode
+  children: React.ReactNode
 }
 
-const UserProvider = ({children} : UserProviderProps) => {
+const UserProvider = ({ children }: UserProviderProps) => {
   const [userInfo, setUserInfo] = useState(0);
   const [userChat, setUserChat] = useState({
     name: "",
@@ -98,90 +97,104 @@ const UserProvider = ({children} : UserProviderProps) => {
     color: ""
   });
   const [serverChat, setServerChat] = useState({
-      name : "general"
+    name: "general"
   });
   const [UserDetailsFirebase, setUserDetailsFirebase] = useState<User | null>(null!);
 
   const [myDetail, SetMyDetail] = useState({
-      name: "h-s-m",
-      img: "https://avatars.githubusercontent.com/u/98532264?v=4",
-      userid: "h-s-m",
-      joined: Date.now(),
-      color: "orange"
+    name: "h-s-m",
+    img: "https://avatars.githubusercontent.com/u/98532264?v=4",
+    userid: "h-s-m",
+    joined: Date.now(),
+    color: "orange"
   });
   const [server, setServer] = useState({
-    name : "default"
+    name: "default"
     // make the rest of the details for the servers soon
-});
-useEffect(() => {
+  });
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (res) => {
       res ? setUserDetailsFirebase(res) : setUserDetailsFirebase(null);
       // TODO: do the abv for myDetails
     });
 
     return unsubscribe;
-});
+  });
 
   //TODO: check the types here
-  const RegisterUser = (email : string, name : string, password : string) => {
+  const RegisterUser = (email: string, name: string, password: string) => {
     try {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      return updateProfile(auth.currentUser!, {
-        displayName : name
-      })
-    })
-    .then(res => console.log(res));
-    }catch{(err : any) => {
-      console.error(err.message);
-    }
-    }finally {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          return updateProfile(auth.currentUser!, {
+            displayName: name
+          })
+        })
+        .then(res => console.log(res));
+    } catch {
+      (err: any) => {
+        console.error(err.message);
+      }
+    } finally {
       // setLoading -> false
     }
   };
 
-  const signInUser = (email : string, password : string) => {
+  const signInUser = (email: string, password: string) => {
     try {
       signInWithEmailAndPassword(auth, email, password)
-      .then(res => console.log(res));
-    }catch(err : any) {
+        .then(res => console.log(res));
+    } catch (err: any) {
       console.error(err.message);
-    }finally {
+    } finally {
       // setLoading -> false
     }
   }
   //TODO: implement ALL THE LOADING HERE NOT IN THE HOME.JSX (prevents the time out thing)
   const signInUserGoogle = () => {
-    try {
-      signInWithRedirect(auth, new GoogleAuthProvider())
-      .then(res => console.log(res));
-    }catch(err : any) {
-      console.error(err.message);
-    }finally {
-      // setLoading -> false
-    }
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        console.log(result);
+        const user = result.user;
+        console.log("user >>>", user);
+        // setUser(user)
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        alert(errorCode)
+      });
   }
-
   const signInUserGitHub = () => {
-    try {
-      signInWithRedirect(auth, new GithubAuthProvider())
-      .then(res => console.log(res));
-    }catch(err : any) {
-      console.error(err.message);
-    }finally {
-      // setLoading -> false
-    }
+    const provider = new GithubAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        console.log(result);
+        const user = result.user;
+        console.log("user >>>", user);
+        // setUser(user)
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        alert(errorCode)
+      });
   }
 
   const logoutUser = () => {
     signOut(auth)
   }
 
-  const forgotPassword = (email : string) => {
+  const forgotPassword = (email: string) => {
     return sendPasswordResetEmail(auth, email);
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat,server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGoogle, signInUserGitHub}}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle }}>
       {children}
     </UserContext.Provider>
   )
