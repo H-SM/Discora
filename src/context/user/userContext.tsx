@@ -36,6 +36,8 @@ export interface UserContextInterface {
   setServerChat: Dispatch<SetStateAction<ServerChat>>,
   userInfo: number,
   setUserInfo: React.Dispatch<React.SetStateAction<number>>,
+  Loading: boolean,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   server: Server,
   setServer: Dispatch<SetStateAction<Server>>,
   myDetail: myDetailer,
@@ -65,6 +67,8 @@ const defaultState = {
   setServerChat: (serverChat: ServerChat) => { },
   userInfo: 0,
   setUserInfo: (userInfo: number) => { },
+  Loading: false,
+  setLoading: (Loading: boolean) => { },
   server: {
     name: "default",
   },
@@ -89,6 +93,7 @@ type UserProviderProps = {
 
 const UserProvider = ({ children }: UserProviderProps) => {
   const [userInfo, setUserInfo] = useState(0);
+  const [Loading, setLoading] = useState(false);
   const [userChat, setUserChat] = useState({
     name: "",
     img: "",
@@ -121,7 +126,6 @@ const UserProvider = ({ children }: UserProviderProps) => {
     return unsubscribe;
   });
 
-  //TODO: check the types here
   const RegisterUser = (email: string, name: string, password: string) => {
     try {
       createUserWithEmailAndPassword(auth, email, password)
@@ -141,18 +145,20 @@ const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const signInUser = (email: string, password: string) => {
+    setLoading(true);
     try {
       signInWithEmailAndPassword(auth, email, password)
         .then(res => console.log(res));
     } catch (err: any) {
       console.error(err.message);
     } finally {
-      // setLoading -> false
+      setLoading(false);
     }
   }
   //TODO: implement ALL THE LOADING HERE NOT IN THE HOME.JSX (prevents the time out thing)
   const signInUserGoogle = () => {
     const provider = new GoogleAuthProvider();
+    setLoading(true);
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -166,10 +172,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // Handle Errors here.
         const errorCode = error.code;
         alert(errorCode)
-      });
+      }).finally(() => setLoading(false));
   }
   const signInUserGitHub = () => {
     const provider = new GithubAuthProvider();
+    setLoading(true);
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -183,18 +190,18 @@ const UserProvider = ({ children }: UserProviderProps) => {
         // Handle Errors here.
         const errorCode = error.code;
         alert(errorCode)
-      });
+      }).finally(() => setLoading(false));
   }
 
   const logoutUser = () => {
-    signOut(auth)
+    signOut(auth);
   }
 
   const forgotPassword = (email: string) => {
     return sendPasswordResetEmail(auth, email);
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle }}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading }}>
       {children}
     </UserContext.Provider>
   )
