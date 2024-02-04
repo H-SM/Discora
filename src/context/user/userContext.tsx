@@ -148,7 +148,17 @@ const UserProvider = ({ children }: UserProviderProps) => {
     setLoading(true);
     try {
       signInWithEmailAndPassword(auth, email, password)
-        .then(res => console.log(res));
+        .then(res => {
+          console.log(res);
+          SetMyDetail({
+            name: res.user.displayName!,
+            img: res.user.photoURL!,
+            userid: res.user.uid,
+            joined: Date.now(),
+            color: "orange"
+          });
+        });
+        
     } catch (err: any) {
       console.error(err.message);
     } finally {
@@ -165,6 +175,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
         console.log(result);
         const user = result.user;
         console.log("user >>>", user);
+        SetMyDetail({
+          name: user.displayName!,
+          img: user.photoURL!,
+          userid: user.uid,
+          joined: Date.now(),
+          color: "orange"
+        });
         // setUser(user)
         // IdP data available using getAdditionalUserInfo(result)
         // ...
@@ -183,6 +200,13 @@ const UserProvider = ({ children }: UserProviderProps) => {
         console.log(result);
         const user = result.user;
         console.log("user >>>", user);
+        SetMyDetail({
+          name: user.displayName!,
+          img: user.photoURL!,
+          userid: user.uid,
+          joined: Date.now(),
+          color: "orange"
+        });
         // setUser(user)
         // IdP data available using getAdditionalUserInfo(result)
         // ...

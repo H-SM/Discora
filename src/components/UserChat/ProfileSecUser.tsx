@@ -1,10 +1,15 @@
+import { useContext } from "react";
+import { UserContext } from "../../context/user/userContext";
+
 const ProfileSecUser = () => {
+  const context = useContext(UserContext);
+  const { myDetail } = context!;
   return (
     <div className='bg-black/30 h-[3.25rem] w-full flex flex-row gap-2 justify-between items-center'>
         <div className='flex flex-row gap-2 justify-center items-center ml-3'>
-            <img className='rounded-full object-cover w-[2.5rem] h-[2.5rem]' src='https://wallpapers-clan.com/wp-content/uploads/2023/05/cool-pfp-02.jpg' alt="user_here" />
+            <img className='rounded-full object-cover w-[2.5rem] h-[2.5rem]' src={myDetail.img} alt="user_here" />
             <div className='flex flex-col gap-1'>
-            <p className='font-semibold select-none font-mono h-[1rem]'>h-s-m</p>
+            <p className='font-semibold select-none font-mono h-[1rem]'>{myDetail.name}</p>
             <p className='text-[0.7rem] select-none font-roboto h-[1rem]'>online</p>
             </div>
         </div>
