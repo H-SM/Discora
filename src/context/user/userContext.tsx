@@ -50,6 +50,7 @@ export interface UserContextInterface {
   forgotPassword: (email: string) => Promise<void>;
   UserDetailsFirebase: User | null,
   setUserDetailsFirebase: Dispatch<SetStateAction<User | null>>,
+  
 }
 
 const defaultState = {
