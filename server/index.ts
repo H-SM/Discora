@@ -28,7 +28,7 @@ app.post("/user/:id" ,async (req : Request,res : Response) => {
         const userId = req.params.id;
     
         // Check if the user with the provided ID exists
-        const existingUserQuery = await pool.query("SELECT * FROM \"USER\" WHERE id = $1", [userId]);
+        const existingUserQuery = await pool.query("SELECT name, email, img, username, joined FROM \"USER\" WHERE id = $1", [userId]);
         const existingUser = existingUserQuery.rows[0];
     
         if (existingUser) {
@@ -37,7 +37,7 @@ app.post("/user/:id" ,async (req : Request,res : Response) => {
         } else {
           // User does not exist, insert a new user
           const newUserQuery = await pool.query(
-            "INSERT INTO \"USER\" (id, name, email, img, username, joined) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+            "INSERT INTO \"USER\" (id, name, email, img, username, joined) VALUES ($1, $2, $3, $4, $5, $6) RETURNING name, email, img, username, joined",
             [userId, name, email, img, username, joined]
           );
     
@@ -50,9 +50,25 @@ app.post("/user/:id" ,async (req : Request,res : Response) => {
       }
 });
 
+app.get("/getuser/:id", async (req : Request,res : Response) => {
+    try{
+      const existingUserQuery = await pool.query("SELECT name, email, img, username, joined FROM \"USER\" WHERE id = $1", [req.params.id]);
+      const existingUser = existingUserQuery.rows[0];
+  
+      if (existingUser) {
+        res.json(existingUser);
+      } else {
+        console.log("Can't find the user which is asked here");
+        res.status(404).json({error : "can't find the user"});
+      }
+    }catch(e : any){
+      console.error(e.message);
+      res.status(500).json({ error: "Internal Server Error"});
+    }
+});
 
 app.get("/",async (req:Request, res : Response) => {
-    res.send("Discora Beackend!!! \n designed by HSM \n © 2024 Discora. All rights reserved.")
+    res.send("Discora Backend!!! \n designed by HSM \n © 2024 Discora. All rights reserved.")
 })
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
