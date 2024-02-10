@@ -48,6 +48,7 @@ export interface UserContextInterface {
   signInUserGoogle: () => void;
   logoutUser: () => void;
   forgotPassword: (email: string) => Promise<void>;
+  getuserinfo: (id: string, name: string, email: string, img: string, username: string, joined: string, color: string) => void;
   UserDetailsFirebase: User | null,
   setUserDetailsFirebase: Dispatch<SetStateAction<User | null>>,
   
@@ -220,6 +221,16 @@ const UserProvider = ({ children }: UserProviderProps) => {
           joined: user.metadata.creationTime!,
           color: "orange"
         });
+
+        getuserinfo(
+          user.uid,
+          user.displayName!,
+          user.email!,
+          user.photoURL!,
+          user.displayName!,
+          user.metadata.creationTime!,
+          "orange"
+        );
         // setUser(user)
         // IdP data available using getAdditionalUserInfo(result)
         // ...
@@ -245,6 +256,17 @@ const UserProvider = ({ children }: UserProviderProps) => {
           joined: user.metadata.creationTime!,
           color: "orange"
         });
+
+        getuserinfo(
+          user.uid,
+          user.displayName!,
+          user.email!,
+          user.photoURL!,
+          user.displayName!,
+          user.metadata.creationTime!,
+          "orange"
+        );
+
         // setUser(user)
         // IdP data available using getAdditionalUserInfo(result)
         // ...
@@ -263,7 +285,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     return sendPasswordResetEmail(auth, email);
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading }}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo}}>
       {children}
     </UserContext.Provider>
   )

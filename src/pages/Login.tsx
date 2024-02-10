@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const context = useContext(UserContext);
-  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase, signInUserGoogle, signInUserGitHub, SetMyDetail } = context!;
+  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase, signInUserGoogle, signInUserGitHub, SetMyDetail, getuserinfo } = context!;
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +25,17 @@ const Login = () => {
         joined: UserDetailsFirebase.metadata.creationTime!,
         color: "orange"
       });
+
+      getuserinfo(
+        UserDetailsFirebase.uid,
+        UserDetailsFirebase.displayName!,
+        UserDetailsFirebase.email!,
+        UserDetailsFirebase.photoURL!,
+        UserDetailsFirebase.displayName!,
+        UserDetailsFirebase.metadata.creationTime!,
+        "orange"
+      );
+
       navigate("/");
     } 
   })
