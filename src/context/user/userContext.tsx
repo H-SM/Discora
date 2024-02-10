@@ -15,7 +15,7 @@ export interface myDetailer {
   name: string;
   img: string;
   userid: string;
-  joined: number;
+  joined: string;
   color: string;
 }
 
@@ -75,11 +75,11 @@ const defaultState = {
   },
   setServer: (server: Server) => { },
   myDetail: {
-    name: "h-s-m",
-    img: "https://avatars.githubusercontent.com/u/98532264?v=4",
-    userid: "h-s-m",
-    joined: Date.now(),
-    color: "orange"
+    name: "",
+    img: "",
+    userid: "",
+    joined: "",
+    color: "",
   },
   SetMyDetail: (myDetail: myDetailer) => { },
   UserDetailsFirebase: null as User | null, // or initialize with an empty object if you prefer {}
@@ -107,12 +107,14 @@ const UserProvider = ({ children }: UserProviderProps) => {
   });
   const [UserDetailsFirebase, setUserDetailsFirebase] = useState<User | null>(null!);
 
+  const host = "http://localhost:8000";
+
   const [myDetail, SetMyDetail] = useState({
-    name: "h-s-m",
-    img: "https://avatars.githubusercontent.com/u/98532264?v=4",
-    userid: "h-s-m",
-    joined: Date.now(),
-    color: "orange"
+    name: "",
+    img: "",
+    userid: "",
+    joined: "",
+    color: "",
   });
   const [server, setServer] = useState({
     name: "default"
@@ -145,21 +147,56 @@ const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
+  const getuserinfo = async (id : string, name : string, email : string, img : string, username : string, joined : string, color : string) => {
+    try {
+      const response = await fetch(`${host}/user/${id}`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id, name, email, img, username, joined, color}) 
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+  
+      const json = await response.json();
+      SetMyDetail({
+        name: json.username!,
+        img: json.img!,
+        userid: json.id,
+        joined: json.joined!,
+        color: json.color!,
+      });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
   const signInUser = (email: string, password: string) => {
     setLoading(true);
     try {
       signInWithEmailAndPassword(auth, email, password)
         .then(res => {
-          console.log(res);
+          
           SetMyDetail({
             name: res.user.displayName!,
             img: res.user.photoURL!,
             userid: res.user.uid,
-            joined: Date.now(),
+            joined: res.user.metadata.creationTime!,
             color: "orange"
           });
+
+          getuserinfo(
+            res.user.uid,
+            res.user.displayName!,
+            res.user.email!,
+            res.user.photoURL!,
+            res.user.displayName!,
+            res.user.metadata.creationTime!,
+            "orange"
+          );
         });
-        
     } catch (err: any) {
       console.error(err.message);
     } finally {
@@ -180,7 +217,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
           name: user.displayName!,
           img: user.photoURL!,
           userid: user.uid,
-          joined: Date.now(),
+          joined: user.metadata.creationTime!,
           color: "orange"
         });
         // setUser(user)
@@ -205,7 +242,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
           name: user.displayName!,
           img: user.photoURL!,
           userid: user.uid,
-          joined: Date.now(),
+          joined: user.metadata.creationTime!,
           color: "orange"
         });
         // setUser(user)

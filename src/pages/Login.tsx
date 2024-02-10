@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const context = useContext(UserContext);
-  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase, signInUserGoogle, signInUserGitHub } = context!;
+  const { RegisterUser, signInUser, forgotPassword, UserDetailsFirebase, signInUserGoogle, signInUserGitHub, SetMyDetail } = context!;
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +18,13 @@ const Login = () => {
   useEffect(() => {
     if(UserDetailsFirebase) {
       console.log(UserDetailsFirebase);
+      SetMyDetail({
+        name: UserDetailsFirebase.displayName!,
+        img: UserDetailsFirebase.photoURL!,
+        userid: UserDetailsFirebase.uid,
+        joined: UserDetailsFirebase.metadata.creationTime!,
+        color: "orange"
+      });
       navigate("/");
     } 
   })

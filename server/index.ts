@@ -24,11 +24,11 @@ app.post("/todo" ,async (req : Request,res : Response) => {
 
 app.post("/user/:id" ,async (req : Request,res : Response) => {
     try {
-        const { name, email, img, username, joined } = req.body;
+        const { name, email, img, username, joined, color } = req.body;
         const userId = req.params.id;
     
         // Check if the user with the provided ID exists
-        const existingUserQuery = await pool.query("SELECT name, email, img, username, joined FROM \"USER\" WHERE id = $1", [userId]);
+        const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color FROM \"USER\" WHERE id = $1", [userId]);
         const existingUser = existingUserQuery.rows[0];
     
         if (existingUser) {
@@ -37,8 +37,8 @@ app.post("/user/:id" ,async (req : Request,res : Response) => {
         } else {
           // User does not exist, insert a new user
           const newUserQuery = await pool.query(
-            "INSERT INTO \"USER\" (id, name, email, img, username, joined) VALUES ($1, $2, $3, $4, $5, $6) RETURNING name, email, img, username, joined",
-            [userId, name, email, img, username, joined]
+            "INSERT INTO \"USER\" (id, name, email, img, username, joined, color) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING name, email, img, username, joined, color",
+            [userId, name, email, img, username, joined, color]
           );
     
           const newUser = newUserQuery.rows[0];
@@ -52,7 +52,7 @@ app.post("/user/:id" ,async (req : Request,res : Response) => {
 
 app.get("/getuser/:id", async (req : Request,res : Response) => {
     try{
-      const existingUserQuery = await pool.query("SELECT name, email, img, username, joined FROM \"USER\" WHERE id = $1", [req.params.id]);
+      const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color FROM \"USER\" WHERE id = $1", [req.params.id]);
       const existingUser = existingUserQuery.rows[0];
   
       if (existingUser) {
