@@ -24,11 +24,11 @@ app.post("/todo" ,async (req : Request,res : Response) => {
 
 app.post("/user/:id" ,async (req : Request,res : Response) => {
     try {
-        const { name, email, img, username, joined, color } = req.body;
+        const { name, email, img, username, joined } = req.body;
         const userId = req.params.id;
     
         // Check if the user with the provided ID exists
-        const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color FROM \"USER\" WHERE id = $1", [userId]);
+        const existingUserQuery = await pool.query("SELECT name, email, img, username, joined FROM \"USER\" WHERE id = $1", [userId]);
         const existingUser = existingUserQuery.rows[0];
     
         if (existingUser) {
@@ -37,8 +37,8 @@ app.post("/user/:id" ,async (req : Request,res : Response) => {
         } else {
           // User does not exist, insert a new user
           const newUserQuery = await pool.query(
-            "INSERT INTO \"USER\" (id, name, email, img, username, joined, color) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING name, email, img, username, joined, color",
-            [userId, name, email, img, username, joined, color]
+            "INSERT INTO \"USER\" (id, name, email, img, username, joined) VALUES ($1, $2, $3, $4, $5, $6) RETURNING name, email, img, username, joined",
+            [userId, name, email, img, username, joined]
           );
     
           const newUser = newUserQuery.rows[0];
@@ -48,6 +48,27 @@ app.post("/user/:id" ,async (req : Request,res : Response) => {
         console.error(err);
         res.status(500).json({ error: "Internal Server Error" });
       }
+});
+
+app.post("/addfriend", async (req: Request, res: Response) => {
+  try {
+    const { user_id: userId, friend_id: friendId } = req.body;
+
+    // Insert a new entry into the FRIEND table
+    const query = `
+      INSERT INTO FRIEND (user_id, friend_ids)
+      VALUES ($1, ARRAY[$2])
+      ON CONFLICT (user_id) DO UPDATE
+      SET friend_ids = array_append(COALESCE(FRIEND.friend_ids, ARRAY[]::VARCHAR[]), $3)
+      RETURNING user_id, friend_ids;
+    `;
+    const { rows } = await pool.query(query, [userId, friendId, friendId]);
+
+    res.json(rows[0]); // Return the inserted/updated row
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.get("/getuser/:id", async (req : Request,res : Response) => {
@@ -67,6 +88,10 @@ app.get("/getuser/:id", async (req : Request,res : Response) => {
     }
 });
 
+
+
+
+// make the user friend's section here now and connect it over the db (plan the entire schema for the user 1v1 chat)
 app.get("/",async (req:Request, res : Response) => {
     res.send("Discora Backend!!! \n designed by HSM \n © 2024 Discora. All rights reserved.")
 })
