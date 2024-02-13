@@ -71,6 +71,62 @@ app.post("/addfriend", async (req: Request, res: Response) => {
   }
 });
 
+app.get("/getallfriendids/:user_id", async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.user_id;
+
+    // Retrieve the array of friend IDs for the specified user ID
+    const query = `
+      SELECT friend_ids
+      FROM FRIEND
+      WHERE user_id = $1;
+    `;
+    const { rows } = await pool.query(query, [userId]);
+
+    if (rows.length === 0) {
+      // User not found in FRIEND table
+      res.json({ user_id: userId, friend_ids: [] });
+    } else {
+      // User found, return the array of friend IDs
+      res.json({ user_id: userId, friend_ids: rows[0].friend_ids });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/getfrienddetails", async (req: Request, res: Response) => {
+  try {
+    // Extract the array of friend IDs from the request body
+    const friendIds: string[] = req.body.friend_ids;
+
+    // Query the details of each friend using the friend IDs
+    const query = `
+      SELECT id, name, email, img, username, joined
+      FROM "USER"
+      WHERE id = ANY($1);
+    `;
+    const { rows } = await pool.query(query, [friendIds]);
+
+    // Map the query results to an array of friend details
+    const friendDetails = rows.map((friend: any) => ({
+      id: friend.id,
+      name: friend.name,
+      email: friend.email,
+      img: friend.img,
+      username: friend.username,
+      joined: friend.joined
+    }));
+
+    // Return the array of friend details in the response
+    res.json(friendDetails);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.get("/getuser/:id", async (req : Request,res : Response) => {
     try{
       const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color FROM \"USER\" WHERE id = $1", [req.params.id]);
@@ -87,6 +143,7 @@ app.get("/getuser/:id", async (req : Request,res : Response) => {
       res.status(500).json({ error: "Internal Server Error"});
     }
 });
+
 
 
 
