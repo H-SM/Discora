@@ -10,6 +10,9 @@ export interface UserChat {
   color: string;
 }
 
+export interface friend_id {
+  friendIds : string [];
+}
 
 export interface myDetailer {
   name: string;
@@ -35,6 +38,8 @@ export interface UserContextInterface {
   serverChat: ServerChat,
   setServerChat: Dispatch<SetStateAction<ServerChat>>,
   userInfo: number,
+  friendIds : friend_id,
+  setFriendIds : React.Dispatch<React.SetStateAction<friend_id>>,
   setUserInfo: React.Dispatch<React.SetStateAction<number>>,
   Loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -74,6 +79,10 @@ const defaultState = {
   server: {
     name: "default",
   },
+  friendIds : {
+    friendIds : ['']
+  },
+  setFriendIds :(friendIds: friend_id) => { },
   setServer: (server: Server) => { },
   myDetail: {
     name: "",
@@ -121,6 +130,11 @@ const UserProvider = ({ children }: UserProviderProps) => {
     name: "default"
     // make the rest of the details for the servers soon
   });
+
+  const [friendIds, setFriendIds] = useState({
+    friendIds : ['']
+  });
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (res) => {
       res ? setUserDetailsFirebase(res) : setUserDetailsFirebase(null);
@@ -148,6 +162,27 @@ const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
+  const getfriendids = async (userid : string) => {
+    try{
+      const response = await fetch(`${host}/user/${userid}`, {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+  
+      const json = await response.json();
+
+      setFriendIds({
+        friendIds : json.friend_ids
+      });
+    }catch(e : any) {
+      console.log(e.message);
+    }
+  }
   const getuserinfo = async (id : string, name : string, email : string, img : string, username : string, joined : string, color : string) => {
     try {
       const response = await fetch(`${host}/user/${id}`, {
@@ -285,7 +320,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     return sendPasswordResetEmail(auth, email);
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo}}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo, friendIds, setFriendIds}}>
       {children}
     </UserContext.Provider>
   )
