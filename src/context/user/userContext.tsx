@@ -14,6 +14,12 @@ export interface friend_id {
   friendIds : string [];
 }
 
+export interface friendDetails {
+  friendDetails : string [];
+}
+
+
+
 export interface myDetailer {
   name: string;
   img: string;
@@ -38,6 +44,8 @@ export interface UserContextInterface {
   serverChat: ServerChat,
   setServerChat: Dispatch<SetStateAction<ServerChat>>,
   userInfo: number,
+  friendDetails: friendDetails,
+  setFriendDetails:React.Dispatch<React.SetStateAction<friendDetails>>,
   friendIds : friend_id,
   setFriendIds : React.Dispatch<React.SetStateAction<friend_id>>,
   setUserInfo: React.Dispatch<React.SetStateAction<number>>,
@@ -52,6 +60,8 @@ export interface UserContextInterface {
   signInUserGitHub: () => void;
   signInUserGoogle: () => void;
   logoutUser: () => void;
+  getfriendids: (userid: string) => void;
+  getfrienddetails: (friendIds: string []) => void;
   forgotPassword: (email: string) => Promise<void>;
   getuserinfo: (id: string, name: string, email: string, img: string, username: string, joined: string, color: string) => void;
   UserDetailsFirebase: User | null,
@@ -83,6 +93,10 @@ const defaultState = {
     friendIds : ['']
   },
   setFriendIds :(friendIds: friend_id) => { },
+  friendDetails : {
+    friendDetails : ['']
+  },
+  setFriendDetails:(friendDetails: friendDetails) => { },
   setServer: (server: Server) => { },
   myDetail: {
     name: "",
@@ -134,7 +148,10 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const [friendIds, setFriendIds] = useState({
     friendIds : ['']
   });
-
+  const [friendDetails, setFriendDetails] = useState({
+    friendDetails : ['']
+  });
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (res) => {
       res ? setUserDetailsFirebase(res) : setUserDetailsFirebase(null);
@@ -164,7 +181,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
   const getfriendids = async (userid : string) => {
     try{
-      const response = await fetch(`${host}/user/${userid}`, {
+      const response = await fetch(`${host}/getallfriendids/${userid}`, {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",
@@ -178,6 +195,29 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
       setFriendIds({
         friendIds : json.friend_ids
+      });
+    }catch(e : any) {
+      console.log(e.message);
+    }
+  }
+
+  const getfrienddetails = async (friendIds : string []) => {
+    try{
+      const response = await fetch(`${host}/getfrienddetails`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body : JSON.stringify({friend_ids : friendIds})  
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+
+      const json = await response.json();
+
+      setFriendDetails({
+        friendDetails : json
       });
     }catch(e : any) {
       console.log(e.message);
@@ -320,7 +360,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     return sendPasswordResetEmail(auth, email);
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo, friendIds, setFriendIds}}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo, friendIds, setFriendIds, getfriendids, friendDetails, setFriendDetails, getfrienddetails}}>
       {children}
     </UserContext.Provider>
   )

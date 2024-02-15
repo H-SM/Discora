@@ -1,35 +1,41 @@
-import { useContext, useEffect } from 'react'
+import { Key, useContext, useEffect } from 'react'
 import { UserContext } from "../../context/user/userContext";
+import FriendMessageCard from './FriendMessageCard';
 
     
 const FriendListUser = () => {
     const context = useContext(UserContext);
-    const { setUserInfo, userChat, setUserChat } = context!;
+    const { setUserInfo, myDetail, setUserChat,getfriendids, friendIds, getfrienddetails, friendDetails } = context!;
 
     useEffect(() => {
-      console.log(userChat);
-    },[userChat]);
+      if(myDetail.userid){
+        getfriendids(myDetail.userid);
+      }
+    },[]);
 
-    const handleButtonClick = () => {
-      setUserInfo(1);
-      setUserChat({
-        name: "Sid",
-        img: "https://wallpapers-clan.com/wp-content/uploads/2023/05/cool-pfp-02.jpg",
-        userid: "sid_the_sloth",
-        joined: "Jul 23,2020",
-        color: "white"
-      });
-    };
+    useEffect(() => {
+      if(friendIds.friendIds[0] != ""){
+        //TODO: make a 20 element infinite scroll section here
+        getfrienddetails(friendIds.friendIds);
+        console.log(friendDetails);
 
+      }
+    },[]);
     
   return (
     <div className='flex flex-col justify-start items-center gap-2 w-[13rem]'>
-      <button className='w-full h-[2.5rem] flex gap-3 items-center focus:text-white active:text-white text-gray-200 justify-start hover:bg-white/5 active:bg-white/10 focus:bg-white/10 px-2 rounded-md hover:cursor-pointer ' onClick={handleButtonClick}>
-            <img className='rounded-full object-cover w-[2rem] h-[2rem]' src='https://wallpapers-clan.com/wp-content/uploads/2023/05/cool-pfp-02.jpg' alt="user_here" />
-            <p className='font-normal select-none font-roboto'>Sid</p>
-      </button>
-      
-      {/* TODO: get the list of user's friends here */}
+      {friendDetails.friendDetails[0] != "" ?
+      friendDetails.friendDetails.map((friend: any, key : Key) => (
+        <FriendMessageCard 
+        key={key} 
+        username={friend.username}
+        userid={friend.userid}
+        img={friend.img}
+        joined={friend.joined}/>
+        ))
+        :
+        <>No Friends :)</>
+      }
     </div>
   )
 }
