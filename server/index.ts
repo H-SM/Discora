@@ -59,19 +59,41 @@ app.post("/user/:id", async (req: Request, res: Response) => {
 
 app.post("/addfriend", async (req: Request, res: Response) => {
   try {
-    const { user_id: userId, friend_id: friendId } = req.body;
+    const { user_id: userId, name, hashtag } = req.body;
 
-    // Insert a new entry into the FRIEND table
-    const query = `
-      INSERT INTO FRIEND (user_id, friend_ids)
-      VALUES ($1, ARRAY[$2])
-      ON CONFLICT (user_id) DO UPDATE
-      SET friend_ids = array_append(COALESCE(FRIEND.friend_ids, ARRAY[]::VARCHAR[]), $3)
-      RETURNING user_id, friend_ids;
+    //getting the friend's id to addd over the table 
+    const getFriendId = await pool.query("SELECT id FROM \"USER\" WHERE name = $1 AND hashtag = $2", [name, hashtag]);
+    const getFriendIdHere = getFriendId.rows[0];
+
+    const checkConflictQuery = `
+    SELECT user_id, friend_ids
+    FROM FRIEND
+    WHERE user_id = $1 AND $2 = ANY(friend_ids)
+    LIMIT 1;
     `;
-    const { rows } = await pool.query(query, [userId, friendId, friendId]);
 
-    res.json(rows[0]); // Return the inserted/updated row
+    const { rows: conflictRows } = await pool.query(checkConflictQuery, [userId, getFriendIdHere.id]);
+
+    if (conflictRows.length > 0) {
+      // Conflict exists, return the conflicting row
+      res.json(conflictRows[0]);
+    } else {
+      // No conflict on both user_id and friend_ids, proceed with the INSERT
+      const query = `
+        INSERT INTO FRIEND (user_id, friend_ids)
+        VALUES ($1, ARRAY[$2])
+        ON CONFLICT (user_id) DO UPDATE
+        SET friend_ids = array_append(COALESCE(FRIEND.friend_ids, ARRAY[]::VARCHAR[]), $3)
+        RETURNING user_id, friend_ids;
+        `;
+
+      const { rows } = await pool.query(query, [userId, getFriendIdHere.id, getFriendIdHere.id]);
+      res.json(rows[0]);
+    }
+
+    // const { rows } = await pool.query(query, [userId, getFriendIdHere.id, getFriendIdHere.id]);
+
+    // Return the inserted/updated row
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
@@ -136,7 +158,7 @@ app.post("/getfrienddetails", async (req: Request, res: Response) => {
 
 app.get("/getuser/:id", async (req: Request, res: Response) => {
   try {
-    const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color FROM \"USER\" WHERE id = $1", [req.params.id]);
+    const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color, hashtag FROM \"USER\" WHERE id = $1", [req.params.id]);
     const existingUser = existingUserQuery.rows[0];
 
     if (existingUser) {
