@@ -5,7 +5,7 @@ import FriendMessageCard from './FriendMessageCard';
     
 const FriendListUser = () => {
     const context = useContext(UserContext);
-    const { setUserInfo, myDetail, setUserChat,getfriendids, friendIds, getfrienddetails, friendDetails } = context!;
+    const { myDetail, getfriendids, friendIds, getfrienddetails, friendDetails } = context!;
 
     useEffect(() => {
       if(myDetail.userid){
@@ -17,8 +17,6 @@ const FriendListUser = () => {
       if(friendIds.friendIds[0] != ""){
         //TODO: make a 20 element infinite scroll section here
         getfrienddetails(friendIds.friendIds);
-        console.log(friendDetails);
-
       }
     },[]);
     

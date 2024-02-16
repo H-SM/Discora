@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import pool from "./data";
 
-const app : Express = express();
+const app: Express = express();
 app.use(cors());
 app.use(express.json());
 
@@ -11,43 +11,50 @@ const port = process.env.PORT || 8000;
 
 //for the above path the verification over the jwt wont be used 
 
-app.post("/todo" ,async (req : Request,res : Response) => {
-    try {
-        const { description } = req.body;
-        const newSample = await pool.query("INSERT INTO sample (description) VALUES ($1) RETURNING *", [description]);
+app.post("/todo", async (req: Request, res: Response) => {
+  try {
+    const { description } = req.body;
+    const newSample = await pool.query("INSERT INTO sample (description) VALUES ($1) RETURNING *", [description]);
 
-        res.json(newSample.rows[0]);
-    } catch(err) {
-        console.log(err);
-    } 
+    res.json(newSample.rows[0]);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-app.post("/user/:id" ,async (req : Request,res : Response) => {
-    try {
-        const { name, email, img, username, joined } = req.body;
-        const userId = req.params.id;
-    
-        // Check if the user with the provided ID exists
-        const existingUserQuery = await pool.query("SELECT name, email, img, username, joined FROM \"USER\" WHERE id = $1", [userId]);
-        const existingUser = existingUserQuery.rows[0];
-    
-        if (existingUser) {
-          // User exists, return user details
-          res.json(existingUser);
-        } else {
-          // User does not exist, insert a new user
-          const newUserQuery = await pool.query(
-            "INSERT INTO \"USER\" (id, name, email, img, username, joined) VALUES ($1, $2, $3, $4, $5, $6) RETURNING name, email, img, username, joined",
-            [userId, name, email, img, username, joined]
-          );
-    
-          const newUser = newUserQuery.rows[0];
-          res.json(newUser);
-        }
-      } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
+app.post("/user/:id", async (req: Request, res: Response) => {
+  try {
+    const { name, email, img, username, joined, hashtag } = req.body;
+    const userId = req.params.id;
+
+    // Check if the user with the provided ID exists
+    const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, hashtag FROM \"USER\" WHERE id = $1", [userId]);
+    const existingUser = existingUserQuery.rows[0];
+
+    if (existingUser) {
+      // User exists, return user details
+      res.json(existingUser);
+    } else {
+      //checking for existance hash and name if not, prompt user to change the hash 
+      const existingUserQueryHash = await pool.query("SELECT name, hashtag FROM \"USER\" WHERE name = $1 AND hashtag = $2", [name, hashtag]);
+      const existingUserHash = existingUserQueryHash.rows[0];
+      if (existingUserHash) {
+        res.status(500).json({ error: "Hash in use", code: "HASH_USED" });
+        return;
       }
+      // User does not exist, insert a new user
+      const newUserQuery = await pool.query(
+        "INSERT INTO \"USER\" (id, name, email, img, username, joined, hashtag) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING name, email, img, username, joined, hashtag",
+        [userId, name, email, img, username, joined, hashtag]
+      );
+
+      const newUser = newUserQuery.rows[0];
+      res.json(newUser);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.post("/addfriend", async (req: Request, res: Response) => {
@@ -127,21 +134,21 @@ app.post("/getfrienddetails", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/getuser/:id", async (req : Request,res : Response) => {
-    try{
-      const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color FROM \"USER\" WHERE id = $1", [req.params.id]);
-      const existingUser = existingUserQuery.rows[0];
-  
-      if (existingUser) {
-        res.json(existingUser);
-      } else {
-        console.log("Can't find the user which is asked here");
-        res.status(404).json({error : "can't find the user"});
-      }
-    }catch(e : any){
-      console.error(e.message);
-      res.status(500).json({ error: "Internal Server Error"});
+app.get("/getuser/:id", async (req: Request, res: Response) => {
+  try {
+    const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color FROM \"USER\" WHERE id = $1", [req.params.id]);
+    const existingUser = existingUserQuery.rows[0];
+
+    if (existingUser) {
+      res.json(existingUser);
+    } else {
+      console.log("Can't find the user which is asked here");
+      res.status(404).json({ error: "can't find the user" });
     }
+  } catch (e: any) {
+    console.error(e.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 
@@ -149,9 +156,9 @@ app.get("/getuser/:id", async (req : Request,res : Response) => {
 
 
 // make the user friend's section here now and connect it over the db (plan the entire schema for the user 1v1 chat)
-app.get("/",async (req:Request, res : Response) => {
-    res.send("Discora Backend!!! \n designed by HSM \n © 2024 Discora. All rights reserved.")
+app.get("/", async (req: Request, res: Response) => {
+  res.send("Discora Backend!!! \n designed by HSM \n © 2024 Discora. All rights reserved.")
 })
 app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
+  console.log(`[server]: Server is running at http://localhost:${port}`);
 });
