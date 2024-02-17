@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const UserTopNav = () => {
     const navigate = useNavigate();
     const context = useContext(UserContext);
-    const {userInfo, server, userChat, serverChat, logoutUser} = context!;
+    const {userInfo, server, userChat, serverChat, logoutUser, setUserInfo} = context!;
 
     const handlelogout = () => {
         logoutUser();
@@ -35,7 +35,7 @@ const UserTopNav = () => {
             <p className='text-[0.9rem] leading-[1.3rem] text-white font-semibold ml-1'>{userChat.name}</p>
             </div>
         </div>
-        : userInfo == 0 ?  
+        : userInfo == 0 || userInfo == 5 ?  
         <div className='w-full h-full flex items-center justify-start'>
             <div className='w-[7rem] h-full flex gap-1 items-center text-white/50 justify-center'>
             <svg fill="currentColor" viewBox="-3 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" width={"2rem"} height={"2rem"}><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" ></g><g id="SVGRepo_iconCarrier"> <title>friend</title> <path d="M17.25 20.5c1.281 0.719 2 1.906 1.875 3.125-0.063 0.75-0.031 0.75-1 0.875-0.594 0.063-4.375 0.094-8.219 0.094-4.375 0-8.938-0.031-9.281-0.125-1.281-0.344-0.531-2.719 1.156-3.844 1.344-0.844 4.063-2.156 4.813-2.313 1.031-0.219 1.156-0.875 0-2.844-0.25-0.469-0.531-1.813-0.563-3.25-0.031-2.313 0.375-3.875 2.406-4.656 0.375-0.125 0.813-0.188 1.219-0.188 1.344 0 2.594 0.75 3.125 1.844 0.719 1.469 0.375 5.313-0.375 6.719-0.906 1.594-0.813 2.094 0.188 2.344 0.625 0.156 2.688 1.125 4.656 2.219zM24.094 18.531c1 0.531 1.563 1.5 1.469 2.438-0.031 0.563-0.031 0.594-0.781 0.688-0.375 0.063-2.344 0.094-4.656 0.094-0.406-0.969-1.188-1.844-2.25-2.406-1.219-0.688-2.656-1.406-3.75-1.875 0.719-0.344 1.344-0.625 1.625-0.688 0.781-0.188 0.875-0.625 0-2.188-0.219-0.375-0.469-1.438-0.5-2.563-0.031-1.813 0.375-3.063 1.938-3.656 0.313-0.094 0.656-0.156 0.969-0.156 1.031 0 2 0.563 2.406 1.438 0.531 1.156 0.281 4.156-0.281 5.281-0.688 1.25-0.625 1.625 0.156 1.813 0.5 0.125 2.094 0.906 3.656 1.781z"></path> </g></svg>
@@ -55,7 +55,7 @@ const UserTopNav = () => {
                 <button className='px-2 max-w-[5rem] rounded-md hover:bg-white/5 active:bg-white/10 hover:text-white font-semibold text-gray-300'>Blocked</button>
             </div>
             <div className='w-[7rem] h-full flex items-center justify-center'>
-                <button className='px-2 rounded-md bg-green-700 font-semibold'>Add Friend</button>
+                <button className='px-2 rounded-md bg-green-700 font-semibold' onClick={() => setUserInfo(5)}>Add Friend</button>
             </div>
 
             {/* REMOVE THIS AFTER TESTING  */}

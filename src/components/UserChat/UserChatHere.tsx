@@ -12,7 +12,7 @@ const UserChatHere = () => {
   return (
     <div className='w-full h-full flex flex-row justify-between'>
       <UserSideNav />
-      {userInfo === 0 ? <UserFriendsMenu /> : <UserChatSection />}
+      {userInfo === 0 || userInfo === 5 ? <UserFriendsMenu /> : <UserChatSection />}
       <UserRightSec />
     </div>
   );
