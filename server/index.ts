@@ -28,7 +28,7 @@ app.post("/user/:id", async (req: Request, res: Response) => {
     const userId = req.params.id;
 
     // Check if the user with the provided ID exists
-    const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, hashtag FROM \"USER\" WHERE id = $1", [userId]);
+    const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, hashtag FROM USERS WHERE id = $1", [userId]);
     const existingUser = existingUserQuery.rows[0];
 
     if (existingUser) {
@@ -36,7 +36,7 @@ app.post("/user/:id", async (req: Request, res: Response) => {
       res.json(existingUser);
     } else {
       //checking for existance hash and name if not, prompt user to change the hash 
-      const existingUserQueryHash = await pool.query("SELECT name, hashtag FROM \"USER\" WHERE name = $1 AND hashtag = $2", [name, hashtag]);
+      const existingUserQueryHash = await pool.query("SELECT name, hashtag FROM USERS WHERE name = $1 AND hashtag = $2", [name, hashtag]);
       const existingUserHash = existingUserQueryHash.rows[0];
       if (existingUserHash) {
         res.status(500).json({ error: "Hash in use", code: "HASH_USED" });
@@ -44,7 +44,7 @@ app.post("/user/:id", async (req: Request, res: Response) => {
       }
       // User does not exist, insert a new user
       const newUserQuery = await pool.query(
-        "INSERT INTO \"USER\" (id, name, email, img, username, joined, hashtag) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING name, email, img, username, joined, hashtag",
+        "INSERT INTO USERS (id, name, email, img, username, joined, hashtag) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING name, email, img, username, joined, hashtag",
         [userId, name, email, img, username, joined, hashtag]
       );
 
@@ -62,7 +62,11 @@ app.post("/addfriend", async (req: Request, res: Response) => {
     const { user_id: userId, name, hashtag } = req.body;
 
     //getting the friend's id to addd over the table 
-    const getFriendId = await pool.query("SELECT id FROM \"USER\" WHERE name = $1 AND hashtag = $2", [name, hashtag]);
+    const getFriendId = await pool.query("SELECT id FROM USERS WHERE name = $1 AND hashtag = $2", [name, hashtag]);
+    if(getFriendId.rowCount == 0) {
+      res.status(404).json({ error: "NO such user exist", code : "FRIEND_NULL" });
+      return;
+    }
     const getFriendIdHere = getFriendId.rows[0];
 
     const checkConflictQuery = `
@@ -133,7 +137,7 @@ app.post("/getfrienddetails", async (req: Request, res: Response) => {
     // Query the details of each friend using the friend IDs
     const query = `
       SELECT id, name, email, img, username, joined
-      FROM "USER"
+      FROM USERS
       WHERE id = ANY($1);
     `;
     const { rows } = await pool.query(query, [friendIds]);
@@ -158,7 +162,7 @@ app.post("/getfrienddetails", async (req: Request, res: Response) => {
 
 app.get("/getuser/:id", async (req: Request, res: Response) => {
   try {
-    const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color, hashtag FROM \"USER\" WHERE id = $1", [req.params.id]);
+    const existingUserQuery = await pool.query("SELECT name, email, img, username, joined, color, hashtag FROM USERS WHERE id = $1", [req.params.id]);
     const existingUser = existingUserQuery.rows[0];
 
     if (existingUser) {
