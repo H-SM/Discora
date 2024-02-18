@@ -4,7 +4,7 @@ import React, { useContext, ChangeEvent, FormEvent } from 'react';
 
 const UserFriendsMenu = () => {
   const context = useContext(UserContext);
-  const { userInfo } = context!;
+  const { userInfo, addfriends, UserDetailsFirebase } = context!;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.trim();
@@ -27,7 +27,8 @@ const UserFriendsMenu = () => {
     console.log('Name:', nameInput.value, nameInput.value.length);
     console.log('Hashtag:', hashtagInput.value);
 
-    
+    addfriends(UserDetailsFirebase!.uid, nameInput.value,  hashtagInput.value.substring(1, 5));
+
   };
 
   return (

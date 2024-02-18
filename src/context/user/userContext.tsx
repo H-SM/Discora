@@ -64,6 +64,7 @@ export interface UserContextInterface {
   getfrienddetails: (friendIds: string []) => void;
   forgotPassword: (email: string) => Promise<void>;
   getuserinfo: (id: string, name: string, email: string, img: string, username: string, joined: string, color: string) => void;
+  addfriends: (user_id: string ,name: string ,hashtag: string) => void; 
   UserDetailsFirebase: User | null,
   setUserDetailsFirebase: Dispatch<SetStateAction<User | null>>,
   
@@ -223,6 +224,35 @@ const UserProvider = ({ children }: UserProviderProps) => {
       console.log(e.message);
     }
   }
+
+  const addfriends = async (user_id : string ,name : string ,hashtag : string) => {
+    try{
+      const response = await fetch(`${host}/addfriend`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body : JSON.stringify({user_id, name, hashtag})  
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to add friend code : ${response.json()}`);
+      }
+
+      const json = await response.json();
+
+      if(user_id !== json.user_id) {
+        throw new Error(`Invalid user_id`);
+      }
+      setFriendIds({
+        friendIds : json.friend_ids
+      });
+      getfrienddetails(json.friend_ids);
+
+    }catch(e : any) {
+      console.log(e.message);
+    }
+  }
+
   const getuserinfo = async (id : string, name : string, email : string, img : string, username : string, joined : string, color : string) => {
     try {
       const response = await fetch(`${host}/user/${id}`, {
@@ -360,7 +390,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     return sendPasswordResetEmail(auth, email);
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo, friendIds, setFriendIds, getfriendids, friendDetails, setFriendDetails, getfrienddetails}}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo, friendIds, setFriendIds, getfriendids, friendDetails, setFriendDetails, getfrienddetails, addfriends}}>
       {children}
     </UserContext.Provider>
   )
