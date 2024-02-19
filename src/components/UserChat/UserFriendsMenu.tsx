@@ -1,10 +1,10 @@
 import ListOfUsers from './ListOfUsers'
 import { UserContext } from '../../context/user/userContext';
-import React, { useContext, ChangeEvent, FormEvent } from 'react';
+import React, { useContext, ChangeEvent, FormEvent, Key } from 'react';
 
 const UserFriendsMenu = () => {
   const context = useContext(UserContext);
-  const { userInfo, addfriends, UserDetailsFirebase } = context!;
+  const { userInfo, addfriends, UserDetailsFirebase, friendDetails } = context!;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.trim();
@@ -46,7 +46,23 @@ const UserFriendsMenu = () => {
           <div className=' w-full font-roboto font-semibold text-[0.7rem] leading-4 text-gray-300/80 mt-8 ml-12'>
             <p>ONLINE - 0</p>
           </div>
-          <ListOfUsers />
+          <div className='w-full flex flex-col justify-start items-center mt-2 overflow-y-auto h-[79vh]'>
+          {friendDetails.friendDetails[0] != "" ?
+          friendDetails.friendDetails.map((friend: any, key : Key) => (
+          <ListOfUsers
+          key={key}
+          username={friend.username} 
+          userid={friend.userid} 
+          img={friend.img} 
+          joined={friend.joined}
+          />
+          ))
+          :
+          <>
+          no friends :)
+          </>
+          }
+          </div>
         </div>
         :
         //5 

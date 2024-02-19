@@ -1,5 +1,5 @@
 import { useContext} from 'react'
-import logo from "../../assets/logo_discora_nobg_new.png"
+import logo from "../../assets/logo_discora_nobg_new.png";
 import clsx from 'clsx';
 import { UserContext } from "../../context/user/userContext";
 import RoleTitle from '../ServerLists/RoleTitle';
