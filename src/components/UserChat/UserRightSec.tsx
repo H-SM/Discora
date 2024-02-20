@@ -4,12 +4,18 @@ import clsx from 'clsx';
 import { UserContext } from "../../context/user/userContext";
 import RoleTitle from '../ServerLists/RoleTitle';
 import UserCard from '../ServerLists/UserCard';
+import { format } from 'date-fns';
 
     
 const UserRightSec = () => {
     const context = useContext(UserContext);
     const {userInfo, userChat} = context!;
 
+    const showDate = (inputDate : string) => {
+      const dateObject: Date = new Date(inputDate);
+      const formattedDate: string = format(dateObject, "dd MMM yyyy").toUpperCase();
+      return formattedDate;
+    }
   return (
     <div className={clsx(`w-[30rem] h-full 2xl:h-full border-l-2 border-gray-600/20`,
     userInfo == 1 ? `bg-[#232428]`: userInfo == 0 ?`bg-[#303238]` : `bg-[#27292d]`
@@ -34,7 +40,7 @@ const UserRightSec = () => {
               </div>
               <div className='w-[33vh] flex flex-col mt-2 mx-2 pb-2 justify-start items-start gap-1 border-white/20 border-b-[0.01rem]'>
                 <p className='font-extrabold text-[0.65rem]'>DISCORA MEMBER SINCE</p>
-                <p className='font-medium text-[0.7rem] font-roboto'>{userChat.joined}</p>
+                <p className='text-[0.7rem] font-roboto'>{showDate(userChat.joined)}</p>
               </div>
               <div className='w-[33vh] flex flex-col mt-2 mx-2 pb-2 justify-start items-start h-[5rem] gap-1'>
                 <p className='font-extrabold text-[0.65rem]'>NOTE</p>
