@@ -1,10 +1,10 @@
 import React from 'react'
 
 interface PropsHere {
-  date : string
+  date: string
 }
 
-const DateLog : React.FC<PropsHere> = (props) => {
+const DateLog: React.FC<PropsHere> = (props) => {
   return (
     <div className="flex items-center w-full opacity-60">
       <div className="flex-1 border-t-[0.01rem] border-gray-500"></div>

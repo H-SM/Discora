@@ -11,11 +11,11 @@ export interface UserChat {
 }
 
 export interface friend_id {
-  friendIds : string [];
+  friendIds: string[];
 }
 
 export interface friendDetails {
-  friendDetails : string [];
+  friendDetails: string[];
 }
 
 
@@ -45,9 +45,9 @@ export interface UserContextInterface {
   setServerChat: Dispatch<SetStateAction<ServerChat>>,
   userInfo: number,
   friendDetails: friendDetails,
-  setFriendDetails:React.Dispatch<React.SetStateAction<friendDetails>>,
-  friendIds : friend_id,
-  setFriendIds : React.Dispatch<React.SetStateAction<friend_id>>,
+  setFriendDetails: React.Dispatch<React.SetStateAction<friendDetails>>,
+  friendIds: friend_id,
+  setFriendIds: React.Dispatch<React.SetStateAction<friend_id>>,
   setUserInfo: React.Dispatch<React.SetStateAction<number>>,
   Loading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -61,13 +61,13 @@ export interface UserContextInterface {
   signInUserGoogle: () => void;
   logoutUser: () => void;
   getfriendids: (userid: string) => void;
-  getfrienddetails: (friendIds: string []) => void;
+  getfrienddetails: (friendIds: string[]) => void;
   forgotPassword: (email: string) => Promise<void>;
   getuserinfo: (id: string, name: string, email: string, img: string, username: string, joined: string, color: string) => void;
-  addfriends: (user_id: string ,name: string ,hashtag: string) => void; 
+  addfriends: (user_id: string, name: string, hashtag: string) => void;
   UserDetailsFirebase: User | null,
   setUserDetailsFirebase: Dispatch<SetStateAction<User | null>>,
-  
+
 }
 
 const defaultState = {
@@ -90,14 +90,14 @@ const defaultState = {
   server: {
     name: "default",
   },
-  friendIds : {
-    friendIds : ['']
+  friendIds: {
+    friendIds: ['']
   },
-  setFriendIds :(friendIds: friend_id) => { },
-  friendDetails : {
-    friendDetails : ['']
+  setFriendIds: (friendIds: friend_id) => { },
+  friendDetails: {
+    friendDetails: ['']
   },
-  setFriendDetails:(friendDetails: friendDetails) => { },
+  setFriendDetails: (friendDetails: friendDetails) => { },
   setServer: (server: Server) => { },
   myDetail: {
     name: "",
@@ -147,12 +147,12 @@ const UserProvider = ({ children }: UserProviderProps) => {
   });
 
   const [friendIds, setFriendIds] = useState({
-    friendIds : ['']
+    friendIds: ['']
   });
   const [friendDetails, setFriendDetails] = useState({
-    friendDetails : ['']
+    friendDetails: ['']
   });
-  
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (res) => {
       res ? setUserDetailsFirebase(res) : setUserDetailsFirebase(null);
@@ -180,8 +180,8 @@ const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
-  const getfriendids = async (userid : string) => {
-    try{
+  const getfriendids = async (userid: string) => {
+    try {
       const response = await fetch(`${host}/getallfriendids/${userid}`, {
         method: 'GET',
         headers: {
@@ -191,25 +191,25 @@ const UserProvider = ({ children }: UserProviderProps) => {
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }
-  
+
       const json = await response.json();
 
       setFriendIds({
-        friendIds : json.friend_ids
+        friendIds: json.friend_ids
       });
-    }catch(e : any) {
+    } catch (e: any) {
       console.log(e.message);
     }
   }
 
-  const getfrienddetails = async (friendIds : string []) => {
-    try{
+  const getfrienddetails = async (friendIds: string[]) => {
+    try {
       const response = await fetch(`${host}/getfrienddetails`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
-        body : JSON.stringify({friend_ids : friendIds})  
+        body: JSON.stringify({ friend_ids: friendIds })
       });
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
@@ -218,21 +218,21 @@ const UserProvider = ({ children }: UserProviderProps) => {
       const json = await response.json();
 
       setFriendDetails({
-        friendDetails : json
+        friendDetails: json
       });
-    }catch(e : any) {
+    } catch (e: any) {
       console.log(e.message);
     }
   }
 
-  const addfriends = async (user_id : string ,name : string ,hashtag : string) => {
-    try{
+  const addfriends = async (user_id: string, name: string, hashtag: string) => {
+    try {
       const response = await fetch(`${host}/addfriend`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
-        body : JSON.stringify({user_id, name, hashtag})  
+        body: JSON.stringify({ user_id, name, hashtag })
       });
       if (!response.ok) {
         throw new Error(`Failed to add friend code : ${response.json()}`);
@@ -240,33 +240,33 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
       const json = await response.json();
 
-      if(user_id !== json.user_id) {
+      if (user_id !== json.user_id) {
         throw new Error(`Invalid user_id`);
       }
       setFriendIds({
-        friendIds : json.friend_ids
+        friendIds: json.friend_ids
       });
       getfrienddetails(json.friend_ids);
 
-    }catch(e : any) {
+    } catch (e: any) {
       console.log(e.message);
     }
   }
 
-  const getuserinfo = async (id : string, name : string, email : string, img : string, username : string, joined : string, color : string) => {
+  const getuserinfo = async (id: string, name: string, email: string, img: string, username: string, joined: string, color: string) => {
     try {
       const response = await fetch(`${host}/user/${id}`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({id, name, email, img, username, joined, color}) 
+        body: JSON.stringify({ id, name, email, img, username, joined, color })
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }
-  
+
       const json = await response.json();
       SetMyDetail({
         name: json.username!,
@@ -284,7 +284,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     try {
       signInWithEmailAndPassword(auth, email, password)
         .then(res => {
-          
+
           SetMyDetail({
             name: res.user.displayName!,
             img: res.user.photoURL!,
@@ -390,7 +390,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
     return sendPasswordResetEmail(auth, email);
   }
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo, friendIds, setFriendIds, getfriendids, friendDetails, setFriendDetails, getfrienddetails, addfriends}}>
+    <UserContext.Provider value={{ userInfo, setUserInfo, userChat, setUserChat, serverChat, setServerChat, server, setServer, myDetail, SetMyDetail, RegisterUser, signInUser, logoutUser, forgotPassword, UserDetailsFirebase, setUserDetailsFirebase, signInUserGitHub, signInUserGoogle, Loading, setLoading, getuserinfo, friendIds, setFriendIds, getfriendids, friendDetails, setFriendDetails, getfrienddetails, addfriends }}>
       {children}
     </UserContext.Provider>
   )

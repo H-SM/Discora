@@ -22,8 +22,8 @@ const FriendListUser = () => {
     
   return (
     <div className='flex flex-col justify-start items-center gap-2 w-[13rem]'>
-      {friendDetails.friendDetails[0] != "" ?
-      friendDetails.friendDetails.map((friend: any, key : Key) => (
+        {friendDetails.friendDetails[0] != "" ?
+        friendDetails.friendDetails.map((friend: any, key : Key) => (
         <FriendMessageCard 
         key={key} 
         username={friend.username}
