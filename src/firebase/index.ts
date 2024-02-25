@@ -7,13 +7,13 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCyvX6qgH7SAPt0NSch3mu_CSm-sl3rSd8",
-  authDomain: "discora-ceadd.firebaseapp.com",
-  projectId: "discora-ceadd",
-  storageBucket: "discora-ceadd.appspot.com",
-  messagingSenderId: "1023430328315",
-  appId: "1:1023430328315:web:ad56692e3b5a1aa0c2955e",
-  measurementId: "G-7H52FBGGE5"
+  apiKey: process.env.FIREBASE_APIKEY,
+  authDomain: process.env.FIREBASE_AUTHDOMAIN,
+  projectId: process.env.FIREBASE_PROJECTID,
+  storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.FIREBASE_SENDERID,
+  appId: process.env.FIREBASE_APPID,
+  measurementId: process.env.FIREBASE_MEASUREMENTID
 };
 
 // Initialize Firebase
